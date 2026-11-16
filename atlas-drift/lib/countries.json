@@ -1,0 +1,2612 @@
+[
+  {
+    "code": "AFG",
+    "name": "Afghanistan",
+    "flag": "🇦🇫",
+    "x": 735,
+    "y": 171,
+    "aliases": [
+      "Islamic Republic of Afghanistan",
+      "AF",
+      "Afġānistān"
+    ]
+  },
+  {
+    "code": "ALB",
+    "name": "Albania",
+    "flag": "🇦🇱",
+    "x": 600,
+    "y": 147,
+    "aliases": [
+      "Republic of Albania",
+      "AL",
+      "Shqipëri",
+      "Shqipëria",
+      "Shqipnia"
+    ]
+  },
+  {
+    "code": "DZA",
+    "name": "Algeria",
+    "flag": "🇩🇿",
+    "x": 549,
+    "y": 186,
+    "aliases": [
+      "People's Democratic Republic of Algeria",
+      "DZ",
+      "Dzayer",
+      "Algérie"
+    ]
+  },
+  {
+    "code": "AND",
+    "name": "Andorra",
+    "flag": "🇦🇩",
+    "x": 544.5,
+    "y": 142.5,
+    "aliases": [
+      "Principality of Andorra",
+      "AD",
+      "Principality of Andorra",
+      "Principat d'Andorra"
+    ]
+  },
+  {
+    "code": "AGO",
+    "name": "Angola",
+    "flag": "🇦🇴",
+    "x": 595.5,
+    "y": 307.5,
+    "aliases": [
+      "Republic of Angola",
+      "AO",
+      "República de Angola",
+      "ʁɛpublika de an'ɡɔla"
+    ]
+  },
+  {
+    "code": "ATG",
+    "name": "Antigua and Barbuda",
+    "flag": "🇦🇬",
+    "x": 354.6,
+    "y": 218.85000000000002,
+    "aliases": [
+      "Antigua and Barbuda",
+      "AG"
+    ]
+  },
+  {
+    "code": "ARG",
+    "name": "Argentina",
+    "flag": "🇦🇷",
+    "x": 348,
+    "y": 372,
+    "aliases": [
+      "Argentine Republic",
+      "AR",
+      "Argentine Republic",
+      "República Argentina"
+    ]
+  },
+  {
+    "code": "ARM",
+    "name": "Armenia",
+    "flag": "🇦🇲",
+    "x": 675,
+    "y": 150,
+    "aliases": [
+      "Republic of Armenia",
+      "AM",
+      "Hayastan",
+      "Republic of Armenia",
+      "Հայաստանի Հանրապետություն"
+    ]
+  },
+  {
+    "code": "AUS",
+    "name": "Australia",
+    "flag": "🇦🇺",
+    "x": 939,
+    "y": 351,
+    "aliases": [
+      "Commonwealth of Australia",
+      "AU"
+    ]
+  },
+  {
+    "code": "AUT",
+    "name": "Austria",
+    "flag": "🇦🇹",
+    "x": 579.99999999,
+    "y": 128.00000001,
+    "aliases": [
+      "Republic of Austria",
+      "AT",
+      "Osterreich",
+      "Oesterreich"
+    ]
+  },
+  {
+    "code": "AZE",
+    "name": "Azerbaijan",
+    "flag": "🇦🇿",
+    "x": 682.5,
+    "y": 148.5,
+    "aliases": [
+      "Republic of Azerbaijan",
+      "AZ",
+      "Republic of Azerbaijan",
+      "Azərbaycan Respublikası"
+    ]
+  },
+  {
+    "code": "BHS",
+    "name": "Bahamas",
+    "flag": "🇧🇸",
+    "x": 312,
+    "y": 197.25,
+    "aliases": [
+      "Commonwealth of the Bahamas",
+      "BS",
+      "Commonwealth of the Bahamas"
+    ]
+  },
+  {
+    "code": "BHR",
+    "name": "Bahrain",
+    "flag": "🇧🇭",
+    "x": 691.6500000000001,
+    "y": 192,
+    "aliases": [
+      "Kingdom of Bahrain",
+      "BH",
+      "Kingdom of Bahrain",
+      "Mamlakat al-Baḥrayn"
+    ]
+  },
+  {
+    "code": "BGD",
+    "name": "Bangladesh",
+    "flag": "🇧🇩",
+    "x": 810,
+    "y": 198,
+    "aliases": [
+      "People's Republic of Bangladesh",
+      "BD",
+      "People's Republic of Bangladesh",
+      "Gônôprôjatôntri Bangladesh"
+    ]
+  },
+  {
+    "code": "BRB",
+    "name": "Barbados",
+    "flag": "🇧🇧",
+    "x": 361.40000001,
+    "y": 230.50000002,
+    "aliases": [
+      "Barbados",
+      "BB"
+    ]
+  },
+  {
+    "code": "BLR",
+    "name": "Belarus",
+    "flag": "🇧🇾",
+    "x": 624,
+    "y": 111,
+    "aliases": [
+      "Republic of Belarus",
+      "BY",
+      "Bielaruś",
+      "Republic of Belarus",
+      "Белоруссия",
+      "Республика Белоруссия"
+    ]
+  },
+  {
+    "code": "BEL",
+    "name": "Belgium",
+    "flag": "🇧🇪",
+    "x": 552,
+    "y": 117.50000001,
+    "aliases": [
+      "Kingdom of Belgium",
+      "BE",
+      "België",
+      "Belgie",
+      "Belgien",
+      "Belgique",
+      "Kingdom of Belgium",
+      "Koninkrijk België",
+      "Royaume de Belgique",
+      "Königreich Belgien"
+    ]
+  },
+  {
+    "code": "BLZ",
+    "name": "Belize",
+    "flag": "🇧🇿",
+    "x": 273.75,
+    "y": 218.25,
+    "aliases": [
+      "Belize",
+      "BZ"
+    ]
+  },
+  {
+    "code": "BEN",
+    "name": "Benin",
+    "flag": "🇧🇯",
+    "x": 546.75,
+    "y": 241.5,
+    "aliases": [
+      "Republic of Benin",
+      "BJ",
+      "Republic of Benin",
+      "République du Bénin"
+    ]
+  },
+  {
+    "code": "BTN",
+    "name": "Bhutan",
+    "flag": "🇧🇹",
+    "x": 811.5,
+    "y": 187.5,
+    "aliases": [
+      "Kingdom of Bhutan",
+      "BT",
+      "Kingdom of Bhutan"
+    ]
+  },
+  {
+    "code": "BOL",
+    "name": "Bolivia",
+    "flag": "🇧🇴",
+    "x": 345,
+    "y": 321,
+    "aliases": [
+      "Plurinational State of Bolivia",
+      "BO",
+      "Buliwya",
+      "Wuliwya",
+      "Bolivia, Plurinational State of",
+      "Plurinational State of Bolivia",
+      "Estado Plurinacional de Bolivia",
+      "Buliwya Mamallaqta",
+      "Wuliwya Suyu",
+      "Tetã Volívia"
+    ]
+  },
+  {
+    "code": "BIH",
+    "name": "Bosnia and Herzegovina",
+    "flag": "🇧🇦",
+    "x": 594,
+    "y": 138,
+    "aliases": [
+      "Bosnia and Herzegovina",
+      "BA",
+      "Bosnia-Herzegovina",
+      "Босна и Херцеговина"
+    ]
+  },
+  {
+    "code": "BWA",
+    "name": "Botswana",
+    "flag": "🇧🇼",
+    "x": 612,
+    "y": 336,
+    "aliases": [
+      "Republic of Botswana",
+      "BW",
+      "Republic of Botswana",
+      "Lefatshe la Botswana"
+    ]
+  },
+  {
+    "code": "BRA",
+    "name": "Brazil",
+    "flag": "🇧🇷",
+    "x": 375,
+    "y": 300,
+    "aliases": [
+      "Federative Republic of Brazil",
+      "BR",
+      "Brasil",
+      "Federative Republic of Brazil",
+      "República Federativa do Brasil"
+    ]
+  },
+  {
+    "code": "BRN",
+    "name": "Brunei",
+    "flag": "🇧🇳",
+    "x": 883.9999999800001,
+    "y": 256.5,
+    "aliases": [
+      "Nation of Brunei, Abode of Peace",
+      "BN",
+      "Brunei Darussalam",
+      "Nation of Brunei",
+      "the Abode of Peace"
+    ]
+  },
+  {
+    "code": "BGR",
+    "name": "Bulgaria",
+    "flag": "🇧🇬",
+    "x": 615,
+    "y": 141,
+    "aliases": [
+      "Republic of Bulgaria",
+      "BG",
+      "Republic of Bulgaria",
+      "Република България"
+    ]
+  },
+  {
+    "code": "BFA",
+    "name": "Burkina Faso",
+    "flag": "🇧🇫",
+    "x": 534,
+    "y": 231,
+    "aliases": [
+      "Burkina Faso",
+      "BF"
+    ]
+  },
+  {
+    "code": "BDI",
+    "name": "Burundi",
+    "flag": "🇧🇮",
+    "x": 630,
+    "y": 280.5,
+    "aliases": [
+      "Republic of Burundi",
+      "BI",
+      "Republic of Burundi",
+      "Republika y'Uburundi",
+      "République du Burundi"
+    ]
+  },
+  {
+    "code": "KHM",
+    "name": "Cambodia",
+    "flag": "🇰🇭",
+    "x": 855,
+    "y": 231,
+    "aliases": [
+      "Kingdom of Cambodia",
+      "KH",
+      "Kingdom of Cambodia"
+    ]
+  },
+  {
+    "code": "CMR",
+    "name": "Cameroon",
+    "flag": "🇨🇲",
+    "x": 576,
+    "y": 252,
+    "aliases": [
+      "Republic of Cameroon",
+      "CM",
+      "Republic of Cameroon",
+      "République du Cameroun"
+    ]
+  },
+  {
+    "code": "CAN",
+    "name": "Canada",
+    "flag": "🇨🇦",
+    "x": 255,
+    "y": 90,
+    "aliases": [
+      "Canada",
+      "CA"
+    ]
+  },
+  {
+    "code": "CPV",
+    "name": "Cape Verde",
+    "flag": "🇨🇻",
+    "x": 468,
+    "y": 222,
+    "aliases": [
+      "Republic of Cabo Verde",
+      "CV",
+      "Republic of Cabo Verde",
+      "República de Cabo Verde"
+    ]
+  },
+  {
+    "code": "CAF",
+    "name": "Central African Republic",
+    "flag": "🇨🇫",
+    "x": 603,
+    "y": 249,
+    "aliases": [
+      "Central African Republic",
+      "CF",
+      "Central African Republic",
+      "République centrafricaine"
+    ]
+  },
+  {
+    "code": "TCD",
+    "name": "Chad",
+    "flag": "🇹🇩",
+    "x": 597,
+    "y": 225,
+    "aliases": [
+      "Republic of Chad",
+      "TD",
+      "Tchad",
+      "Republic of Chad",
+      "République du Tchad"
+    ]
+  },
+  {
+    "code": "CHL",
+    "name": "Chile",
+    "flag": "🇨🇱",
+    "x": 327,
+    "y": 360,
+    "aliases": [
+      "Republic of Chile",
+      "CL",
+      "Republic of Chile",
+      "República de Chile"
+    ]
+  },
+  {
+    "code": "CHN",
+    "name": "China",
+    "flag": "🇨🇳",
+    "x": 855,
+    "y": 165,
+    "aliases": [
+      "People's Republic of China",
+      "CN",
+      "Zhōngguó",
+      "Zhongguo",
+      "Zhonghua",
+      "People's Republic of China",
+      "中华人民共和国",
+      "Zhōnghuá Rénmín Gònghéguó"
+    ]
+  },
+  {
+    "code": "COL",
+    "name": "Colombia",
+    "flag": "🇨🇴",
+    "x": 324,
+    "y": 258,
+    "aliases": [
+      "Republic of Colombia",
+      "CO",
+      "Republic of Colombia",
+      "República de Colombia"
+    ]
+  },
+  {
+    "code": "COM",
+    "name": "Comoros",
+    "flag": "🇰🇲",
+    "x": 672.75,
+    "y": 306.49999998,
+    "aliases": [
+      "Union of the Comoros",
+      "KM",
+      "Union of the Comoros",
+      "Union des Comores",
+      "Udzima wa Komori",
+      "al-Ittiḥād al-Qumurī"
+    ]
+  },
+  {
+    "code": "COG",
+    "name": "Congo",
+    "flag": "🇨🇬",
+    "x": 585,
+    "y": 273,
+    "aliases": [
+      "Republic of the Congo",
+      "CG",
+      "Congo",
+      "Congo-Brazzaville"
+    ]
+  },
+  {
+    "code": "CRI",
+    "name": "Costa Rica",
+    "flag": "🇨🇷",
+    "x": 288,
+    "y": 240,
+    "aliases": [
+      "Republic of Costa Rica",
+      "CR",
+      "Republic of Costa Rica",
+      "República de Costa Rica"
+    ]
+  },
+  {
+    "code": "HRV",
+    "name": "Croatia",
+    "flag": "🇭🇷",
+    "x": 586.5,
+    "y": 134.50000002000002,
+    "aliases": [
+      "Republic of Croatia",
+      "HR",
+      "Hrvatska",
+      "Republic of Croatia",
+      "Republika Hrvatska"
+    ]
+  },
+  {
+    "code": "CUB",
+    "name": "Cuba",
+    "flag": "🇨🇺",
+    "x": 300,
+    "y": 205.5,
+    "aliases": [
+      "Republic of Cuba",
+      "CU",
+      "Republic of Cuba",
+      "República de Cuba"
+    ]
+  },
+  {
+    "code": "CYP",
+    "name": "Cyprus",
+    "flag": "🇨🇾",
+    "x": 639,
+    "y": 165,
+    "aliases": [
+      "Republic of Cyprus",
+      "CY",
+      "Kýpros",
+      "Kıbrıs",
+      "Republic of Cyprus",
+      "Κυπριακή Δημοκρατία",
+      "Kıbrıs Cumhuriyeti"
+    ]
+  },
+  {
+    "code": "CZE",
+    "name": "Czechia",
+    "flag": "🇨🇿",
+    "x": 586.5,
+    "y": 120.75,
+    "aliases": [
+      "Czech Republic",
+      "CZ",
+      "Česká republika",
+      "Česko"
+    ]
+  },
+  {
+    "code": "DNK",
+    "name": "Denmark",
+    "flag": "🇩🇰",
+    "x": 570,
+    "y": 102,
+    "aliases": [
+      "Kingdom of Denmark",
+      "DK",
+      "Danmark",
+      "Kingdom of Denmark",
+      "Kongeriget Danmark"
+    ]
+  },
+  {
+    "code": "DJI",
+    "name": "Djibouti",
+    "flag": "🇩🇯",
+    "x": 669,
+    "y": 235.5,
+    "aliases": [
+      "Republic of Djibouti",
+      "DJ",
+      "Jabuuti",
+      "Gabuuti",
+      "Republic of Djibouti",
+      "République de Djibouti",
+      "Gabuutih Ummuuno",
+      "Jamhuuriyadda Jabuuti"
+    ]
+  },
+  {
+    "code": "DMA",
+    "name": "Dominica",
+    "flag": "🇩🇲",
+    "x": 356.00000001,
+    "y": 223.75000002,
+    "aliases": [
+      "Commonwealth of Dominica",
+      "DM",
+      "Dominique",
+      "Wai‘tu kubuli",
+      "Commonwealth of Dominica"
+    ]
+  },
+  {
+    "code": "DOM",
+    "name": "Dominican Republic",
+    "flag": "🇩🇴",
+    "x": 328.00000002,
+    "y": 213,
+    "aliases": [
+      "Dominican Republic",
+      "DO"
+    ]
+  },
+  {
+    "code": "COD",
+    "name": "DR Congo",
+    "flag": "🇨🇩",
+    "x": 615,
+    "y": 270,
+    "aliases": [
+      "Democratic Republic of the Congo",
+      "CD",
+      "DR Congo",
+      "Congo-Kinshasa",
+      "Congo, the Democratic Republic of the",
+      "Democratic Republic of Congo",
+      "DRC"
+    ]
+  },
+  {
+    "code": "ECU",
+    "name": "Ecuador",
+    "flag": "🇪🇨",
+    "x": 307.5,
+    "y": 276,
+    "aliases": [
+      "Republic of Ecuador",
+      "EC",
+      "Republic of Ecuador",
+      "República del Ecuador"
+    ]
+  },
+  {
+    "code": "EGY",
+    "name": "Egypt",
+    "flag": "🇪🇬",
+    "x": 630,
+    "y": 189,
+    "aliases": [
+      "Arab Republic of Egypt",
+      "EG",
+      "Arab Republic of Egypt"
+    ]
+  },
+  {
+    "code": "SLV",
+    "name": "El Salvador",
+    "flag": "🇸🇻",
+    "x": 273.25000002,
+    "y": 228.50000001,
+    "aliases": [
+      "Republic of El Salvador",
+      "SV",
+      "Republic of El Salvador",
+      "República de El Salvador"
+    ]
+  },
+  {
+    "code": "GNQ",
+    "name": "Equatorial Guinea",
+    "flag": "🇬🇶",
+    "x": 570,
+    "y": 264,
+    "aliases": [
+      "Republic of Equatorial Guinea",
+      "GQ",
+      "Republic of Equatorial Guinea",
+      "República de Guinea Ecuatorial",
+      "République de Guinée équatoriale",
+      "República da Guiné Equatorial"
+    ]
+  },
+  {
+    "code": "ERI",
+    "name": "Eritrea",
+    "flag": "🇪🇷",
+    "x": 657,
+    "y": 225,
+    "aliases": [
+      "State of Eritrea",
+      "ER",
+      "State of Eritrea",
+      "ሃገረ ኤርትራ",
+      "Dawlat Iritriyá",
+      "ʾErtrā",
+      "Iritriyā"
+    ]
+  },
+  {
+    "code": "EST",
+    "name": "Estonia",
+    "flag": "🇪🇪",
+    "x": 618,
+    "y": 93,
+    "aliases": [
+      "Republic of Estonia",
+      "EE",
+      "Eesti",
+      "Republic of Estonia",
+      "Eesti Vabariik"
+    ]
+  },
+  {
+    "code": "SWZ",
+    "name": "Eswatini",
+    "flag": "🇸🇿",
+    "x": 634.5,
+    "y": 349.5,
+    "aliases": [
+      "Kingdom of Eswatini",
+      "SZ",
+      "Swaziland",
+      "weSwatini",
+      "Swatini",
+      "Ngwane",
+      "Kingdom of Eswatini",
+      "Umbuso weSwatini"
+    ]
+  },
+  {
+    "code": "ETH",
+    "name": "Ethiopia",
+    "flag": "🇪🇹",
+    "x": 654,
+    "y": 246,
+    "aliases": [
+      "Federal Democratic Republic of Ethiopia",
+      "ET",
+      "ʾĪtyōṗṗyā",
+      "Federal Democratic Republic of Ethiopia",
+      "የኢትዮጵያ ፌዴራላዊ ዲሞክራሲያዊ ሪፐብሊክ"
+    ]
+  },
+  {
+    "code": "FJI",
+    "name": "Fiji",
+    "flag": "🇫🇯",
+    "x": 1065,
+    "y": 324,
+    "aliases": [
+      "Republic of Fiji",
+      "FJ",
+      "Viti",
+      "Republic of Fiji",
+      "Matanitu ko Viti",
+      "Fijī Gaṇarājya"
+    ]
+  },
+  {
+    "code": "FIN",
+    "name": "Finland",
+    "flag": "🇫🇮",
+    "x": 618,
+    "y": 78,
+    "aliases": [
+      "Republic of Finland",
+      "FI",
+      "Suomi",
+      "Republic of Finland",
+      "Suomen tasavalta",
+      "Republiken Finland"
+    ]
+  },
+  {
+    "code": "FRA",
+    "name": "France",
+    "flag": "🇫🇷",
+    "x": 546,
+    "y": 132,
+    "aliases": [
+      "French Republic",
+      "FR",
+      "French Republic",
+      "République française"
+    ]
+  },
+  {
+    "code": "GAB",
+    "name": "Gabon",
+    "flag": "🇬🇦",
+    "x": 575.25,
+    "y": 273,
+    "aliases": [
+      "Gabonese Republic",
+      "GA",
+      "Gabonese Republic",
+      "République Gabonaise"
+    ]
+  },
+  {
+    "code": "GMB",
+    "name": "Gambia",
+    "flag": "🇬🇲",
+    "x": 490.30000001999997,
+    "y": 229.60000001999998,
+    "aliases": [
+      "Republic of the Gambia",
+      "GM",
+      "Republic of the Gambia"
+    ]
+  },
+  {
+    "code": "GEO",
+    "name": "Georgia",
+    "flag": "🇬🇪",
+    "x": 670.5,
+    "y": 144,
+    "aliases": [
+      "Georgia",
+      "GE",
+      "Sakartvelo"
+    ]
+  },
+  {
+    "code": "DEU",
+    "name": "Germany",
+    "flag": "🇩🇪",
+    "x": 567,
+    "y": 117,
+    "aliases": [
+      "Federal Republic of Germany",
+      "DE",
+      "Federal Republic of Germany",
+      "Bundesrepublik Deutschland"
+    ]
+  },
+  {
+    "code": "GHA",
+    "name": "Ghana",
+    "flag": "🇬🇭",
+    "x": 534,
+    "y": 246,
+    "aliases": [
+      "Republic of Ghana",
+      "GH"
+    ]
+  },
+  {
+    "code": "GRC",
+    "name": "Greece",
+    "flag": "🇬🇷",
+    "x": 606,
+    "y": 153,
+    "aliases": [
+      "Hellenic Republic",
+      "GR",
+      "Elláda",
+      "Hellenic Republic",
+      "Ελληνική Δημοκρατία"
+    ]
+  },
+  {
+    "code": "GRD",
+    "name": "Grenada",
+    "flag": "🇬🇩",
+    "x": 355.00000002,
+    "y": 233.65000002000002,
+    "aliases": [
+      "Grenada",
+      "GD"
+    ]
+  },
+  {
+    "code": "GTM",
+    "name": "Guatemala",
+    "flag": "🇬🇹",
+    "x": 269.25,
+    "y": 223.5,
+    "aliases": [
+      "Republic of Guatemala",
+      "GT"
+    ]
+  },
+  {
+    "code": "GIN",
+    "name": "Guinea",
+    "flag": "🇬🇳",
+    "x": 510,
+    "y": 237,
+    "aliases": [
+      "Republic of Guinea",
+      "GN",
+      "Republic of Guinea",
+      "République de Guinée"
+    ]
+  },
+  {
+    "code": "GNB",
+    "name": "Guinea-Bissau",
+    "flag": "🇬🇼",
+    "x": 495,
+    "y": 234,
+    "aliases": [
+      "Republic of Guinea-Bissau",
+      "GW",
+      "Republic of Guinea-Bissau",
+      "República da Guiné-Bissau"
+    ]
+  },
+  {
+    "code": "GUY",
+    "name": "Guyana",
+    "flag": "🇬🇾",
+    "x": 363,
+    "y": 255,
+    "aliases": [
+      "Co-operative Republic of Guyana",
+      "GY",
+      "Co-operative Republic of Guyana"
+    ]
+  },
+  {
+    "code": "HTI",
+    "name": "Haiti",
+    "flag": "🇭🇹",
+    "x": 322.75000002,
+    "y": 213,
+    "aliases": [
+      "Republic of Haiti",
+      "HT",
+      "Republic of Haiti",
+      "République d'Haïti",
+      "Repiblik Ayiti"
+    ]
+  },
+  {
+    "code": "HND",
+    "name": "Honduras",
+    "flag": "🇭🇳",
+    "x": 280.5,
+    "y": 225,
+    "aliases": [
+      "Republic of Honduras",
+      "HN",
+      "Republic of Honduras",
+      "República de Honduras"
+    ]
+  },
+  {
+    "code": "HUN",
+    "name": "Hungary",
+    "flag": "🇭🇺",
+    "x": 600,
+    "y": 129,
+    "aliases": [
+      "Hungary",
+      "HU"
+    ]
+  },
+  {
+    "code": "ISL",
+    "name": "Iceland",
+    "flag": "🇮🇸",
+    "x": 486,
+    "y": 75,
+    "aliases": [
+      "Iceland",
+      "IS",
+      "Island",
+      "Republic of Iceland",
+      "Lýðveldið Ísland"
+    ]
+  },
+  {
+    "code": "IND",
+    "name": "India",
+    "flag": "🇮🇳",
+    "x": 771,
+    "y": 210,
+    "aliases": [
+      "Republic of India",
+      "IN",
+      "Bhārat",
+      "Republic of India",
+      "Bharat Ganrajya",
+      "இந்தியா"
+    ]
+  },
+  {
+    "code": "IDN",
+    "name": "Indonesia",
+    "flag": "🇮🇩",
+    "x": 900,
+    "y": 285,
+    "aliases": [
+      "Republic of Indonesia",
+      "ID",
+      "Republic of Indonesia",
+      "Republik Indonesia"
+    ]
+  },
+  {
+    "code": "IRN",
+    "name": "Iran",
+    "flag": "🇮🇷",
+    "x": 699,
+    "y": 174,
+    "aliases": [
+      "Islamic Republic of Iran",
+      "IR",
+      "Islamic Republic of Iran",
+      "Iran, Islamic Republic of",
+      "Jomhuri-ye Eslāmi-ye Irān"
+    ]
+  },
+  {
+    "code": "IRQ",
+    "name": "Iraq",
+    "flag": "🇮🇶",
+    "x": 672,
+    "y": 171,
+    "aliases": [
+      "Republic of Iraq",
+      "IQ",
+      "Republic of Iraq",
+      "Jumhūriyyat al-‘Irāq"
+    ]
+  },
+  {
+    "code": "IRL",
+    "name": "Ireland",
+    "flag": "🇮🇪",
+    "x": 516,
+    "y": 111,
+    "aliases": [
+      "Republic of Ireland",
+      "IE",
+      "Éire",
+      "Republic of Ireland",
+      "Poblacht na hÉireann"
+    ]
+  },
+  {
+    "code": "ISR",
+    "name": "Israel",
+    "flag": "🇮🇱",
+    "x": 645.39,
+    "y": 175.59,
+    "aliases": [
+      "State of Israel",
+      "IL",
+      "State of Israel",
+      "Medīnat Yisrā'el"
+    ]
+  },
+  {
+    "code": "ITA",
+    "name": "Italy",
+    "flag": "🇮🇹",
+    "x": 578.49999999,
+    "y": 141.50000001,
+    "aliases": [
+      "Italian Republic",
+      "IT",
+      "Italian Republic",
+      "Repubblica italiana"
+    ]
+  },
+  {
+    "code": "CIV",
+    "name": "Ivory Coast",
+    "flag": "🇨🇮",
+    "x": 525,
+    "y": 246,
+    "aliases": [
+      "Republic of Côte d'Ivoire",
+      "CI",
+      "Côte d'Ivoire",
+      "Cote d'Ivoire",
+      "Ivory Coast",
+      "Republic of Côte d'Ivoire",
+      "République de Côte d'Ivoire"
+    ]
+  },
+  {
+    "code": "JAM",
+    "name": "Jamaica",
+    "flag": "🇯🇲",
+    "x": 307.5,
+    "y": 215.25,
+    "aliases": [
+      "Jamaica",
+      "JM"
+    ]
+  },
+  {
+    "code": "JPN",
+    "name": "Japan",
+    "flag": "🇯🇵",
+    "x": 954,
+    "y": 162,
+    "aliases": [
+      "Japan",
+      "JP",
+      "Nippon",
+      "Nihon"
+    ]
+  },
+  {
+    "code": "JOR",
+    "name": "Jordan",
+    "flag": "🇯🇴",
+    "x": 648,
+    "y": 177,
+    "aliases": [
+      "Hashemite Kingdom of Jordan",
+      "JO",
+      "Hashemite Kingdom of Jordan",
+      "al-Mamlakah al-Urdunīyah al-Hāshimīyah"
+    ]
+  },
+  {
+    "code": "KAZ",
+    "name": "Kazakhstan",
+    "flag": "🇰🇿",
+    "x": 744,
+    "y": 126,
+    "aliases": [
+      "Republic of Kazakhstan",
+      "KZ",
+      "Qazaqstan",
+      "Казахстан",
+      "Republic of Kazakhstan",
+      "Қазақстан Республикасы",
+      "Qazaqstan Respublïkası",
+      "Республика Казахстан",
+      "Respublika Kazakhstan"
+    ]
+  },
+  {
+    "code": "KEN",
+    "name": "Kenya",
+    "flag": "🇰🇪",
+    "x": 654,
+    "y": 267,
+    "aliases": [
+      "Republic of Kenya",
+      "KE",
+      "Republic of Kenya",
+      "Jamhuri ya Kenya"
+    ]
+  },
+  {
+    "code": "KIR",
+    "name": "Kiribati",
+    "flag": "🇰🇮",
+    "x": 1059,
+    "y": 265.75000002,
+    "aliases": [
+      "Independent and Sovereign Republic of Kiribati",
+      "KI",
+      "Republic of Kiribati",
+      "Ribaberiki Kiribati"
+    ]
+  },
+  {
+    "code": "KWT",
+    "name": "Kuwait",
+    "flag": "🇰🇼",
+    "x": 677.25,
+    "y": 181.5,
+    "aliases": [
+      "State of Kuwait",
+      "KW",
+      "State of Kuwait",
+      "Dawlat al-Kuwait"
+    ]
+  },
+  {
+    "code": "KGZ",
+    "name": "Kyrgyzstan",
+    "flag": "🇰🇬",
+    "x": 765,
+    "y": 147,
+    "aliases": [
+      "Kyrgyz Republic",
+      "KG",
+      "Киргизия",
+      "Kyrgyz Republic",
+      "Кыргыз Республикасы",
+      "Kyrgyz Respublikasy"
+    ]
+  },
+  {
+    "code": "LAO",
+    "name": "Laos",
+    "flag": "🇱🇦",
+    "x": 855,
+    "y": 216,
+    "aliases": [
+      "Lao People's Democratic Republic",
+      "LA",
+      "Lao",
+      "Lao People's Democratic Republic",
+      "Sathalanalat Paxathipatai Paxaxon Lao"
+    ]
+  },
+  {
+    "code": "LVA",
+    "name": "Latvia",
+    "flag": "🇱🇻",
+    "x": 615,
+    "y": 99,
+    "aliases": [
+      "Republic of Latvia",
+      "LV",
+      "Republic of Latvia",
+      "Latvijas Republika"
+    ]
+  },
+  {
+    "code": "LBN",
+    "name": "Lebanon",
+    "flag": "🇱🇧",
+    "x": 647.4999999900001,
+    "y": 168.50000001,
+    "aliases": [
+      "Lebanese Republic",
+      "LB",
+      "Lebanese Republic",
+      "Al-Jumhūrīyah Al-Libnānīyah"
+    ]
+  },
+  {
+    "code": "LSO",
+    "name": "Lesotho",
+    "flag": "🇱🇸",
+    "x": 625.5,
+    "y": 358.5,
+    "aliases": [
+      "Kingdom of Lesotho",
+      "LS",
+      "Kingdom of Lesotho",
+      "Muso oa Lesotho"
+    ]
+  },
+  {
+    "code": "LBR",
+    "name": "Liberia",
+    "flag": "🇱🇷",
+    "x": 511.5,
+    "y": 250.5,
+    "aliases": [
+      "Republic of Liberia",
+      "LR",
+      "Republic of Liberia"
+    ]
+  },
+  {
+    "code": "LBY",
+    "name": "Libya",
+    "flag": "🇱🇾",
+    "x": 591,
+    "y": 195,
+    "aliases": [
+      "State of Libya",
+      "LY",
+      "State of Libya",
+      "Dawlat Libya"
+    ]
+  },
+  {
+    "code": "LIE",
+    "name": "Liechtenstein",
+    "flag": "🇱🇮",
+    "x": 568.59999999,
+    "y": 128.20000002,
+    "aliases": [
+      "Principality of Liechtenstein",
+      "LI",
+      "Principality of Liechtenstein",
+      "Fürstentum Liechtenstein"
+    ]
+  },
+  {
+    "code": "LTU",
+    "name": "Lithuania",
+    "flag": "🇱🇹",
+    "x": 612,
+    "y": 102,
+    "aliases": [
+      "Republic of Lithuania",
+      "LT",
+      "Republic of Lithuania",
+      "Lietuvos Respublika"
+    ]
+  },
+  {
+    "code": "LUX",
+    "name": "Luxembourg",
+    "flag": "🇱🇺",
+    "x": 558.49999998,
+    "y": 120.75,
+    "aliases": [
+      "Grand Duchy of Luxembourg",
+      "LU",
+      "Grand Duchy of Luxembourg",
+      "Grand-Duché de Luxembourg",
+      "Großherzogtum Luxemburg",
+      "Groussherzogtum Lëtzebuerg"
+    ]
+  },
+  {
+    "code": "MDG",
+    "name": "Madagascar",
+    "flag": "🇲🇬",
+    "x": 681,
+    "y": 330,
+    "aliases": [
+      "Republic of Madagascar",
+      "MG",
+      "Republic of Madagascar",
+      "Repoblikan'i Madagasikara",
+      "République de Madagascar"
+    ]
+  },
+  {
+    "code": "MWI",
+    "name": "Malawi",
+    "flag": "🇲🇼",
+    "x": 642,
+    "y": 310.5,
+    "aliases": [
+      "Republic of Malawi",
+      "MW",
+      "Republic of Malawi"
+    ]
+  },
+  {
+    "code": "MYS",
+    "name": "Malaysia",
+    "flag": "🇲🇾",
+    "x": 877.5,
+    "y": 262.5,
+    "aliases": [
+      "Malaysia",
+      "MY"
+    ]
+  },
+  {
+    "code": "MDV",
+    "name": "Maldives",
+    "flag": "🇲🇻",
+    "x": 759,
+    "y": 260.25,
+    "aliases": [
+      "Republic of the Maldives",
+      "MV",
+      "Maldive Islands",
+      "Republic of the Maldives",
+      "Dhivehi Raajjeyge Jumhooriyya"
+    ]
+  },
+  {
+    "code": "MLI",
+    "name": "Mali",
+    "flag": "🇲🇱",
+    "x": 528,
+    "y": 219,
+    "aliases": [
+      "Republic of Mali",
+      "ML",
+      "Republic of Mali",
+      "République du Mali"
+    ]
+  },
+  {
+    "code": "MLT",
+    "name": "Malta",
+    "flag": "🇲🇹",
+    "x": 583.74999999,
+    "y": 162.50000001,
+    "aliases": [
+      "Republic of Malta",
+      "MT",
+      "Republic of Malta",
+      "Repubblika ta' Malta"
+    ]
+  },
+  {
+    "code": "MHL",
+    "name": "Marshall Islands",
+    "flag": "🇲🇭",
+    "x": 1044,
+    "y": 243,
+    "aliases": [
+      "Republic of the Marshall Islands",
+      "MH",
+      "Republic of the Marshall Islands",
+      "Aolepān Aorōkin M̧ajeļ"
+    ]
+  },
+  {
+    "code": "MRT",
+    "name": "Mauritania",
+    "flag": "🇲🇷",
+    "x": 504,
+    "y": 210,
+    "aliases": [
+      "Islamic Republic of Mauritania",
+      "MR",
+      "Islamic Republic of Mauritania",
+      "al-Jumhūriyyah al-ʾIslāmiyyah al-Mūrītāniyyah"
+    ]
+  },
+  {
+    "code": "MUS",
+    "name": "Mauritius",
+    "flag": "🇲🇺",
+    "x": 712.6500000000001,
+    "y": 330.84999999,
+    "aliases": [
+      "Republic of Mauritius",
+      "MU",
+      "Republic of Mauritius",
+      "République de Maurice"
+    ]
+  },
+  {
+    "code": "MEX",
+    "name": "Mexico",
+    "flag": "🇲🇽",
+    "x": 234,
+    "y": 201,
+    "aliases": [
+      "United Mexican States",
+      "MX",
+      "Mexicanos",
+      "United Mexican States",
+      "Estados Unidos Mexicanos"
+    ]
+  },
+  {
+    "code": "FSM",
+    "name": "Micronesia",
+    "flag": "🇫🇲",
+    "x": 1014.75,
+    "y": 249.25000002,
+    "aliases": [
+      "Federated States of Micronesia",
+      "FM",
+      "Federated States of Micronesia",
+      "Micronesia, Federated States of"
+    ]
+  },
+  {
+    "code": "MDA",
+    "name": "Moldova",
+    "flag": "🇲🇩",
+    "x": 627,
+    "y": 129,
+    "aliases": [
+      "Republic of Moldova",
+      "MD",
+      "Moldova, Republic of",
+      "Republic of Moldova",
+      "Republica Moldova"
+    ]
+  },
+  {
+    "code": "MCO",
+    "name": "Monaco",
+    "flag": "🇲🇨",
+    "x": 562.2,
+    "y": 138.80000001,
+    "aliases": [
+      "Principality of Monaco",
+      "MC",
+      "Principality of Monaco",
+      "Principauté de Monaco"
+    ]
+  },
+  {
+    "code": "MNG",
+    "name": "Mongolia",
+    "flag": "🇲🇳",
+    "x": 855,
+    "y": 132,
+    "aliases": [
+      "Mongolia",
+      "MN"
+    ]
+  },
+  {
+    "code": "MNE",
+    "name": "Montenegro",
+    "flag": "🇲🇪",
+    "x": 597.9000000000001,
+    "y": 142.5,
+    "aliases": [
+      "Montenegro",
+      "ME",
+      "Crna Gora"
+    ]
+  },
+  {
+    "code": "MAR",
+    "name": "Morocco",
+    "flag": "🇲🇦",
+    "x": 525,
+    "y": 174,
+    "aliases": [
+      "Kingdom of Morocco",
+      "MA",
+      "Kingdom of Morocco",
+      "Al-Mamlakah al-Maġribiyah"
+    ]
+  },
+  {
+    "code": "MOZ",
+    "name": "Mozambique",
+    "flag": "🇲🇿",
+    "x": 645,
+    "y": 324.75,
+    "aliases": [
+      "Republic of Mozambique",
+      "MZ",
+      "Republic of Mozambique",
+      "República de Moçambique"
+    ]
+  },
+  {
+    "code": "MMR",
+    "name": "Myanmar",
+    "flag": "🇲🇲",
+    "x": 834,
+    "y": 204,
+    "aliases": [
+      "Republic of the Union of Myanmar",
+      "MM",
+      "Burma",
+      "Republic of the Union of Myanmar",
+      "Pyidaunzu Thanmăda Myăma Nainngandaw"
+    ]
+  },
+  {
+    "code": "NAM",
+    "name": "Namibia",
+    "flag": "🇳🇦",
+    "x": 591,
+    "y": 336,
+    "aliases": [
+      "Republic of Namibia",
+      "NA",
+      "Namibië",
+      "Republic of Namibia"
+    ]
+  },
+  {
+    "code": "NRU",
+    "name": "Nauru",
+    "flag": "🇳🇷",
+    "x": 1040.7499999800002,
+    "y": 271.59999999,
+    "aliases": [
+      "Republic of Nauru",
+      "NR",
+      "Naoero",
+      "Pleasant Island",
+      "Republic of Nauru",
+      "Ripublik Naoero"
+    ]
+  },
+  {
+    "code": "NPL",
+    "name": "Nepal",
+    "flag": "🇳🇵",
+    "x": 792,
+    "y": 186,
+    "aliases": [
+      "Federal Democratic Republic of Nepal",
+      "NP",
+      "Federal Democratic Republic of Nepal",
+      "Loktāntrik Ganatantra Nepāl"
+    ]
+  },
+  {
+    "code": "NLD",
+    "name": "Netherlands",
+    "flag": "🇳🇱",
+    "x": 557.25,
+    "y": 112.5,
+    "aliases": [
+      "Kingdom of the Netherlands",
+      "NL",
+      "Holland",
+      "Nederland",
+      "The Netherlands"
+    ]
+  },
+  {
+    "code": "NZL",
+    "name": "New Zealand",
+    "flag": "🇳🇿",
+    "x": 1062,
+    "y": 393,
+    "aliases": [
+      "New Zealand",
+      "NZ",
+      "Aotearoa"
+    ]
+  },
+  {
+    "code": "NIC",
+    "name": "Nicaragua",
+    "flag": "🇳🇮",
+    "x": 285,
+    "y": 231,
+    "aliases": [
+      "Republic of Nicaragua",
+      "NI",
+      "Republic of Nicaragua",
+      "República de Nicaragua"
+    ]
+  },
+  {
+    "code": "NER",
+    "name": "Niger",
+    "flag": "🇳🇪",
+    "x": 564,
+    "y": 222,
+    "aliases": [
+      "Republic of Niger",
+      "NE",
+      "Nijar"
+    ]
+  },
+  {
+    "code": "NGA",
+    "name": "Nigeria",
+    "flag": "🇳🇬",
+    "x": 564,
+    "y": 240,
+    "aliases": [
+      "Federal Republic of Nigeria",
+      "NG",
+      "Nijeriya",
+      "Naíjíríà",
+      "Federal Republic of Nigeria"
+    ]
+  },
+  {
+    "code": "PRK",
+    "name": "North Korea",
+    "flag": "🇰🇵",
+    "x": 921,
+    "y": 150,
+    "aliases": [
+      "Democratic People's Republic of Korea",
+      "KP",
+      "Democratic People's Republic of Korea",
+      "DPRK",
+      "조선민주주의인민공화국",
+      "Chosŏn Minjujuŭi Inmin Konghwaguk",
+      "Korea, Democratic People's Republic of",
+      "북한",
+      "북조선"
+    ]
+  },
+  {
+    "code": "MKD",
+    "name": "North Macedonia",
+    "flag": "🇲🇰",
+    "x": 606,
+    "y": 144.50000001,
+    "aliases": [
+      "Republic of North Macedonia",
+      "MK",
+      "The former Yugoslav Republic of Macedonia",
+      "Republic of North Macedonia",
+      "Macedonia, The Former Yugoslav Republic of",
+      "Република Северна Македонија",
+      "Macedonia"
+    ]
+  },
+  {
+    "code": "NOR",
+    "name": "Norway",
+    "flag": "🇳🇴",
+    "x": 570,
+    "y": 84,
+    "aliases": [
+      "Kingdom of Norway",
+      "NO",
+      "Norge",
+      "Noreg",
+      "Kingdom of Norway",
+      "Kongeriket Norge",
+      "Kongeriket Noreg"
+    ]
+  },
+  {
+    "code": "OMN",
+    "name": "Oman",
+    "flag": "🇴🇲",
+    "x": 711,
+    "y": 207,
+    "aliases": [
+      "Sultanate of Oman",
+      "OM",
+      "Sultanate of Oman",
+      "Salṭanat ʻUmān"
+    ]
+  },
+  {
+    "code": "PAK",
+    "name": "Pakistan",
+    "flag": "🇵🇰",
+    "x": 750,
+    "y": 180,
+    "aliases": [
+      "Islamic Republic of Pakistan",
+      "PK",
+      "Pākistān",
+      "Islamic Republic of Pakistan",
+      "Islāmī Jumhūriya'eh Pākistān"
+    ]
+  },
+  {
+    "code": "PLW",
+    "name": "Palau",
+    "flag": "🇵🇼",
+    "x": 943.5,
+    "y": 247.5,
+    "aliases": [
+      "Republic of Palau",
+      "PW",
+      "Republic of Palau",
+      "Beluu er a Belau"
+    ]
+  },
+  {
+    "code": "PSE",
+    "name": "Palestine",
+    "flag": "🇵🇸",
+    "x": 645.5999999999999,
+    "y": 174.3,
+    "aliases": [
+      "State of Palestine",
+      "PS",
+      "Palestine, State of",
+      "State of Palestine",
+      "Dawlat Filasṭin"
+    ]
+  },
+  {
+    "code": "PAN",
+    "name": "Panama",
+    "flag": "🇵🇦",
+    "x": 300,
+    "y": 243,
+    "aliases": [
+      "Republic of Panama",
+      "PA",
+      "Republic of Panama",
+      "República de Panamá"
+    ]
+  },
+  {
+    "code": "PNG",
+    "name": "Papua New Guinea",
+    "flag": "🇵🇬",
+    "x": 981,
+    "y": 288,
+    "aliases": [
+      "Independent State of Papua New Guinea",
+      "PG",
+      "Independent State of Papua New Guinea",
+      "Independen Stet bilong Papua Niugini"
+    ]
+  },
+  {
+    "code": "PRY",
+    "name": "Paraguay",
+    "flag": "🇵🇾",
+    "x": 366,
+    "y": 339,
+    "aliases": [
+      "Republic of Paraguay",
+      "PY",
+      "Republic of Paraguay",
+      "República del Paraguay",
+      "Tetã Paraguái"
+    ]
+  },
+  {
+    "code": "PER",
+    "name": "Peru",
+    "flag": "🇵🇪",
+    "x": 312,
+    "y": 300,
+    "aliases": [
+      "Republic of Peru",
+      "PE",
+      "Republic of Peru",
+      "República del Perú"
+    ]
+  },
+  {
+    "code": "PHL",
+    "name": "Philippines",
+    "flag": "🇵🇭",
+    "x": 906,
+    "y": 231,
+    "aliases": [
+      "Republic of the Philippines",
+      "PH",
+      "Republic of the Philippines",
+      "Repúblika ng Pilipinas"
+    ]
+  },
+  {
+    "code": "POL",
+    "name": "Poland",
+    "flag": "🇵🇱",
+    "x": 600,
+    "y": 114,
+    "aliases": [
+      "Republic of Poland",
+      "PL",
+      "Republic of Poland",
+      "Rzeczpospolita Polska"
+    ]
+  },
+  {
+    "code": "PRT",
+    "name": "Portugal",
+    "flag": "🇵🇹",
+    "x": 516,
+    "y": 151.5,
+    "aliases": [
+      "Portuguese Republic",
+      "PT",
+      "Portuguesa",
+      "Portuguese Republic",
+      "República Portuguesa"
+    ]
+  },
+  {
+    "code": "QAT",
+    "name": "Qatar",
+    "flag": "🇶🇦",
+    "x": 693.75,
+    "y": 193.5,
+    "aliases": [
+      "State of Qatar",
+      "QA",
+      "State of Qatar",
+      "Dawlat Qaṭar"
+    ]
+  },
+  {
+    "code": "ROU",
+    "name": "Romania",
+    "flag": "🇷🇴",
+    "x": 615,
+    "y": 132,
+    "aliases": [
+      "Romania",
+      "RO",
+      "Rumania",
+      "Roumania",
+      "România"
+    ]
+  },
+  {
+    "code": "RUS",
+    "name": "Russia",
+    "flag": "🇷🇺",
+    "x": 840,
+    "y": 90,
+    "aliases": [
+      "Russian Federation",
+      "RU",
+      "Russian Federation",
+      "Российская Федерация"
+    ]
+  },
+  {
+    "code": "RWA",
+    "name": "Rwanda",
+    "flag": "🇷🇼",
+    "x": 630,
+    "y": 276,
+    "aliases": [
+      "Republic of Rwanda",
+      "RW",
+      "Republic of Rwanda",
+      "Repubulika y'u Rwanda",
+      "République du Rwanda"
+    ]
+  },
+  {
+    "code": "KNA",
+    "name": "Saint Kitts and Nevis",
+    "flag": "🇰🇳",
+    "x": 351.75,
+    "y": 218.00000001,
+    "aliases": [
+      "Federation of Saint Christopher and Nevis",
+      "KN",
+      "Federation of Saint Christopher and Nevis"
+    ]
+  },
+  {
+    "code": "LCA",
+    "name": "Saint Lucia",
+    "flag": "🇱🇨",
+    "x": 357.10000002,
+    "y": 228.35000001,
+    "aliases": [
+      "Saint Lucia",
+      "LC"
+    ]
+  },
+  {
+    "code": "VCT",
+    "name": "Saint Vincent and the Grenadines",
+    "flag": "🇻🇨",
+    "x": 356.4,
+    "y": 230.25,
+    "aliases": [
+      "Saint Vincent and the Grenadines",
+      "VC"
+    ]
+  },
+  {
+    "code": "WSM",
+    "name": "Samoa",
+    "flag": "🇼🇸",
+    "x": 23.000000010000036,
+    "y": 310.74999999,
+    "aliases": [
+      "Independent State of Samoa",
+      "WS",
+      "Independent State of Samoa",
+      "Malo Saʻoloto Tutoʻatasi o Sāmoa"
+    ]
+  },
+  {
+    "code": "SMR",
+    "name": "San Marino",
+    "flag": "🇸🇲",
+    "x": 577.24999998,
+    "y": 138.70000002,
+    "aliases": [
+      "Most Serene Republic of San Marino",
+      "SM",
+      "Republic of San Marino",
+      "Repubblica di San Marino"
+    ]
+  },
+  {
+    "code": "STP",
+    "name": "São Tomé and Príncipe",
+    "flag": "🇸🇹",
+    "x": 561,
+    "y": 267,
+    "aliases": [
+      "Democratic Republic of São Tomé and Príncipe",
+      "ST",
+      "Democratic Republic of São Tomé and Príncipe",
+      "Sao Tome and Principe",
+      "República Democrática de São Tomé e Príncipe"
+    ]
+  },
+  {
+    "code": "SAU",
+    "name": "Saudi Arabia",
+    "flag": "🇸🇦",
+    "x": 675,
+    "y": 195,
+    "aliases": [
+      "Kingdom of Saudi Arabia",
+      "Saudi",
+      "SA",
+      "Kingdom of Saudi Arabia",
+      "Al-Mamlakah al-‘Arabiyyah as-Su‘ūdiyyah"
+    ]
+  },
+  {
+    "code": "SEN",
+    "name": "Senegal",
+    "flag": "🇸🇳",
+    "x": 498,
+    "y": 228,
+    "aliases": [
+      "Republic of Senegal",
+      "SN",
+      "Republic of Senegal",
+      "République du Sénégal"
+    ]
+  },
+  {
+    "code": "SRB",
+    "name": "Serbia",
+    "flag": "🇷🇸",
+    "x": 603,
+    "y": 138,
+    "aliases": [
+      "Republic of Serbia",
+      "RS",
+      "Srbija",
+      "Republika Srbija",
+      "Србија",
+      "Република Србија",
+      "Republic of Serbia"
+    ]
+  },
+  {
+    "code": "SYC",
+    "name": "Seychelles",
+    "flag": "🇸🇨",
+    "x": 706.99999998,
+    "y": 283.74999999,
+    "aliases": [
+      "Republic of Seychelles",
+      "SC",
+      "Republic of Seychelles",
+      "Repiblik Sesel",
+      "République des Seychelles"
+    ]
+  },
+  {
+    "code": "SLE",
+    "name": "Sierra Leone",
+    "flag": "🇸🇱",
+    "x": 505.5,
+    "y": 244.5,
+    "aliases": [
+      "Republic of Sierra Leone",
+      "SL",
+      "Republic of Sierra Leone"
+    ]
+  },
+  {
+    "code": "SGP",
+    "name": "Singapore",
+    "flag": "🇸🇬",
+    "x": 851.4000000000001,
+    "y": 265.90000002,
+    "aliases": [
+      "Republic of Singapore",
+      "SG",
+      "Singapura",
+      "Republik Singapura",
+      "新加坡共和国"
+    ]
+  },
+  {
+    "code": "SVK",
+    "name": "Slovakia",
+    "flag": "🇸🇰",
+    "x": 598.5,
+    "y": 124.00000002000002,
+    "aliases": [
+      "Slovak Republic",
+      "SK",
+      "Slovak Republic",
+      "Slovenská republika"
+    ]
+  },
+  {
+    "code": "SVN",
+    "name": "Slovenia",
+    "flag": "🇸🇮",
+    "x": 584.44999998,
+    "y": 131.65000002,
+    "aliases": [
+      "Republic of Slovenia",
+      "SI",
+      "Republic of Slovenia",
+      "Republika Slovenija"
+    ]
+  },
+  {
+    "code": "SLB",
+    "name": "Solomon Islands",
+    "flag": "🇸🇧",
+    "x": 1017,
+    "y": 294,
+    "aliases": [
+      "Solomon Islands",
+      "SB"
+    ]
+  },
+  {
+    "code": "SOM",
+    "name": "Somalia",
+    "flag": "🇸🇴",
+    "x": 687,
+    "y": 240,
+    "aliases": [
+      "Federal Republic of Somalia",
+      "SO",
+      "aṣ-Ṣūmāl",
+      "Federal Republic of Somalia",
+      "Jamhuuriyadda Federaalka Soomaaliya",
+      "Jumhūriyyat aṣ-Ṣūmāl al-Fiderāliyya"
+    ]
+  },
+  {
+    "code": "ZAF",
+    "name": "South Africa",
+    "flag": "🇿🇦",
+    "x": 612,
+    "y": 357,
+    "aliases": [
+      "Republic of South Africa",
+      "ZA",
+      "RSA",
+      "Suid-Afrika",
+      "Republic of South Africa"
+    ]
+  },
+  {
+    "code": "KOR",
+    "name": "South Korea",
+    "flag": "🇰🇷",
+    "x": 922.5,
+    "y": 159,
+    "aliases": [
+      "Republic of Korea",
+      "KR",
+      "Korea, Republic of",
+      "Republic of Korea",
+      "남한",
+      "남조선"
+    ]
+  },
+  {
+    "code": "SSD",
+    "name": "South Sudan",
+    "flag": "🇸🇸",
+    "x": 630,
+    "y": 249,
+    "aliases": [
+      "Republic of South Sudan",
+      "SS"
+    ]
+  },
+  {
+    "code": "ESP",
+    "name": "Spain",
+    "flag": "🇪🇸",
+    "x": 528,
+    "y": 150,
+    "aliases": [
+      "Kingdom of Spain",
+      "ES",
+      "Kingdom of Spain",
+      "Reino de España"
+    ]
+  },
+  {
+    "code": "LKA",
+    "name": "Sri Lanka",
+    "flag": "🇱🇰",
+    "x": 783,
+    "y": 249,
+    "aliases": [
+      "Democratic Socialist Republic of Sri Lanka",
+      "LK",
+      "ilaṅkai",
+      "Democratic Socialist Republic of Sri Lanka"
+    ]
+  },
+  {
+    "code": "SDN",
+    "name": "Sudan",
+    "flag": "🇸🇩",
+    "x": 630,
+    "y": 225,
+    "aliases": [
+      "Republic of the Sudan",
+      "SD",
+      "Republic of the Sudan",
+      "Jumhūrīyat as-Sūdān"
+    ]
+  },
+  {
+    "code": "SUR",
+    "name": "Suriname",
+    "flag": "🇸🇷",
+    "x": 372,
+    "y": 258,
+    "aliases": [
+      "Republic of Suriname",
+      "SR",
+      "Sarnam",
+      "Sranangron",
+      "Republic of Suriname",
+      "Republiek Suriname"
+    ]
+  },
+  {
+    "code": "SWE",
+    "name": "Sweden",
+    "flag": "🇸🇪",
+    "x": 585,
+    "y": 84,
+    "aliases": [
+      "Kingdom of Sweden",
+      "SE",
+      "Kingdom of Sweden",
+      "Konungariket Sverige"
+    ]
+  },
+  {
+    "code": "CHE",
+    "name": "Switzerland",
+    "flag": "🇨🇭",
+    "x": 564,
+    "y": 129,
+    "aliases": [
+      "Swiss Confederation",
+      "CH",
+      "Swiss Confederation",
+      "Schweiz",
+      "Suisse",
+      "Svizzera",
+      "Svizra"
+    ]
+  },
+  {
+    "code": "SYR",
+    "name": "Syria",
+    "flag": "🇸🇾",
+    "x": 654,
+    "y": 165,
+    "aliases": [
+      "Syrian Arab Republic",
+      "SY",
+      "Syrian Arab Republic",
+      "Al-Jumhūrīyah Al-ʻArabīyah As-Sūrīyah"
+    ]
+  },
+  {
+    "code": "TJK",
+    "name": "Tajikistan",
+    "flag": "🇹🇯",
+    "x": 753,
+    "y": 153,
+    "aliases": [
+      "Republic of Tajikistan",
+      "TJ",
+      "Toçikiston",
+      "Republic of Tajikistan",
+      "Ҷумҳурии Тоҷикистон",
+      "Çumhuriyi Toçikiston"
+    ]
+  },
+  {
+    "code": "TZA",
+    "name": "Tanzania",
+    "flag": "🇹🇿",
+    "x": 645,
+    "y": 288,
+    "aliases": [
+      "United Republic of Tanzania",
+      "TZ",
+      "Tanzania, United Republic of",
+      "United Republic of Tanzania",
+      "Jamhuri ya Muungano wa Tanzania"
+    ]
+  },
+  {
+    "code": "THA",
+    "name": "Thailand",
+    "flag": "🇹🇭",
+    "x": 840,
+    "y": 225,
+    "aliases": [
+      "Kingdom of Thailand",
+      "TH",
+      "Prathet",
+      "Thai",
+      "Kingdom of Thailand",
+      "ราชอาณาจักรไทย",
+      "Ratcha Anachak Thai"
+    ]
+  },
+  {
+    "code": "TLS",
+    "name": "Timor-Leste",
+    "flag": "🇹🇱",
+    "x": 917.7499999800001,
+    "y": 296.49999999,
+    "aliases": [
+      "Democratic Republic of Timor-Leste",
+      "TL",
+      "East Timor",
+      "Timor",
+      "Democratic Republic of Timor-Leste",
+      "República Democrática de Timor-Leste",
+      "Repúblika Demokrátika Timór-Leste",
+      "Timór Lorosa'e",
+      "Timor Lorosae"
+    ]
+  },
+  {
+    "code": "TGO",
+    "name": "Togo",
+    "flag": "🇹🇬",
+    "x": 543.49999998,
+    "y": 246,
+    "aliases": [
+      "Togolese Republic",
+      "TG",
+      "Togolese",
+      "Togolese Republic",
+      "République Togolaise"
+    ]
+  },
+  {
+    "code": "TON",
+    "name": "Tonga",
+    "flag": "🇹🇴",
+    "x": 15,
+    "y": 330,
+    "aliases": [
+      "Kingdom of Tonga",
+      "TO"
+    ]
+  },
+  {
+    "code": "TTO",
+    "name": "Trinidad and Tobago",
+    "flag": "🇹🇹",
+    "x": 357,
+    "y": 237,
+    "aliases": [
+      "Republic of Trinidad and Tobago",
+      "TT",
+      "Republic of Trinidad and Tobago"
+    ]
+  },
+  {
+    "code": "TUN",
+    "name": "Tunisia",
+    "flag": "🇹🇳",
+    "x": 567,
+    "y": 168,
+    "aliases": [
+      "Tunisian Republic",
+      "TN",
+      "Republic of Tunisia",
+      "al-Jumhūriyyah at-Tūnisiyyah"
+    ]
+  },
+  {
+    "code": "TUR",
+    "name": "Türkiye",
+    "flag": "🇹🇷",
+    "x": 645,
+    "y": 153,
+    "aliases": [
+      "Republic of Türkiye",
+      "TR",
+      "Turkiye",
+      "Republic of Turkey",
+      "Türkiye Cumhuriyeti"
+    ]
+  },
+  {
+    "code": "TKM",
+    "name": "Turkmenistan",
+    "flag": "🇹🇲",
+    "x": 720,
+    "y": 150,
+    "aliases": [
+      "Turkmenistan",
+      "TM"
+    ]
+  },
+  {
+    "code": "TUV",
+    "name": "Tuvalu",
+    "flag": "🇹🇻",
+    "x": 1074,
+    "y": 294,
+    "aliases": [
+      "Tuvalu",
+      "TV"
+    ]
+  },
+  {
+    "code": "UGA",
+    "name": "Uganda",
+    "flag": "🇺🇬",
+    "x": 636,
+    "y": 267,
+    "aliases": [
+      "Republic of Uganda",
+      "UG",
+      "Republic of Uganda",
+      "Jamhuri ya Uganda"
+    ]
+  },
+  {
+    "code": "UKR",
+    "name": "Ukraine",
+    "flag": "🇺🇦",
+    "x": 636,
+    "y": 123,
+    "aliases": [
+      "Ukraine",
+      "UA",
+      "Ukrayina"
+    ]
+  },
+  {
+    "code": "ARE",
+    "name": "United Arab Emirates",
+    "flag": "🇦🇪",
+    "x": 702,
+    "y": 198,
+    "aliases": [
+      "United Arab Emirates",
+      "AE",
+      "UAE",
+      "Emirates"
+    ]
+  },
+  {
+    "code": "GBR",
+    "name": "United Kingdom",
+    "flag": "🇬🇧",
+    "x": 534,
+    "y": 108,
+    "aliases": [
+      "United Kingdom of Great Britain and Northern Ireland",
+      "GB",
+      "UK",
+      "Great Britain"
+    ]
+  },
+  {
+    "code": "USA",
+    "name": "United States",
+    "flag": "🇺🇸",
+    "x": 249,
+    "y": 156,
+    "aliases": [
+      "United States of America",
+      "US",
+      "USA",
+      "United States of America"
+    ]
+  },
+  {
+    "code": "URY",
+    "name": "Uruguay",
+    "flag": "🇺🇾",
+    "x": 372,
+    "y": 369,
+    "aliases": [
+      "Oriental Republic of Uruguay",
+      "UY",
+      "Oriental Republic of Uruguay",
+      "República Oriental del Uruguay"
+    ]
+  },
+  {
+    "code": "UZB",
+    "name": "Uzbekistan",
+    "flag": "🇺🇿",
+    "x": 732,
+    "y": 147,
+    "aliases": [
+      "Republic of Uzbekistan",
+      "UZ",
+      "Republic of Uzbekistan",
+      "O‘zbekiston Respublikasi",
+      "Ўзбекистон Республикаси"
+    ]
+  },
+  {
+    "code": "VUT",
+    "name": "Vanuatu",
+    "flag": "🇻🇺",
+    "x": 1041,
+    "y": 318,
+    "aliases": [
+      "Republic of Vanuatu",
+      "VU",
+      "Republic of Vanuatu",
+      "Ripablik blong Vanuatu",
+      "République de Vanuatu"
+    ]
+  },
+  {
+    "code": "VAT",
+    "name": "Vatican City",
+    "flag": "🇻🇦",
+    "x": 577.3499999999999,
+    "y": 144.3,
+    "aliases": [
+      "Vatican City State",
+      "VA",
+      "Holy See (Vatican City State)",
+      "Vatican City State",
+      "Vatican",
+      "Stato della Città del Vaticano"
+    ]
+  },
+  {
+    "code": "VEN",
+    "name": "Venezuela",
+    "flag": "🇻🇪",
+    "x": 342,
+    "y": 246,
+    "aliases": [
+      "Bolivarian Republic of Venezuela",
+      "VE",
+      "Bolivarian Republic of Venezuela",
+      "Venezuela, Bolivarian Republic of",
+      "República Bolivariana de Venezuela"
+    ]
+  },
+  {
+    "code": "VNM",
+    "name": "Vietnam",
+    "flag": "🇻🇳",
+    "x": 863.4999999900001,
+    "y": 221.50000002,
+    "aliases": [
+      "Socialist Republic of Vietnam",
+      "VN",
+      "Socialist Republic of Vietnam",
+      "Cộng hòa Xã hội chủ nghĩa Việt Nam",
+      "Viet Nam"
+    ]
+  },
+  {
+    "code": "YEM",
+    "name": "Yemen",
+    "flag": "🇾🇪",
+    "x": 684,
+    "y": 225,
+    "aliases": [
+      "Republic of Yemen",
+      "YE",
+      "Yemeni Republic",
+      "al-Jumhūriyyah al-Yamaniyyah"
+    ]
+  },
+  {
+    "code": "ZMB",
+    "name": "Zambia",
+    "flag": "🇿🇲",
+    "x": 630,
+    "y": 315,
+    "aliases": [
+      "Republic of Zambia",
+      "ZM",
+      "Republic of Zambia"
+    ]
+  },
+  {
+    "code": "ZWE",
+    "name": "Zimbabwe",
+    "flag": "🇿🇼",
+    "x": 630,
+    "y": 330,
+    "aliases": [
+      "Republic of Zimbabwe",
+      "ZW",
+      "Republic of Zimbabwe"
+    ]
+  }
+]
