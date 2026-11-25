@@ -1,11 +1,11 @@
 import countries from './countries.json';
 
 export const TIERS = [
-  {name:'Common', points:500, color:'#839484'},
-  {name:'Uncommon', points:1000, color:'#48868a'},
-  {name:'Rare', points:2000, color:'#5474a5'},
-  {name:'Elusive', points:3500, color:'#9369a1'},
-  {name:'Farflung', points:5000, color:'#c28b36'},
+  {name:'Common', points:500, color:'oklch(0.8 0.07 150)'},
+  {name:'Uncommon', points:1000, color:'oklch(0.7 0.11 178)'},
+  {name:'Rare', points:2000, color:'oklch(0.6 0.13 232)'},
+  {name:'Elusive', points:3500, color:'oklch(0.55 0.16 300)'},
+  {name:'Farflung', points:5000, color:'oklch(0.79 0.15 78)'},
 ] as const;
 export type Answer = {country:string; points:number; fact:string};
 export type Question = {id:string; prompt:string; category:string; rule:string; source:string; answers:Answer[]};

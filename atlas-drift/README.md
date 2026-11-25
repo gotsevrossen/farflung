@@ -35,10 +35,13 @@ npm run build
 
 ## Files
 
-- `app/page.tsx`, `app/world-map.tsx`, `app/globals.css`: gameplay and responsive map interface.
+- `app/page.tsx`: game flow, home/game/results panels, dialogs.
+- `app/world-map.tsx`: the SVG map. Pan, zoom and pinch write transforms straight to the DOM (no React re-render per frame); the land layer is memoised; the view fits the accepted answers on reveal.
+- `app/country-search.tsx`: accessible country combobox (aliases, accents and keyboard support).
+- `app/globals.css`: design tokens (OKLCH, light and dark), layout and motion.
 - `app/api/`: configuration status, game generation and scoring endpoints.
 - `lib/expedition.ts`: Purdue requests and authenticated encryption of answer tables.
-- `lib/game.ts`: validation, deterministic daily selection and scoring rules.
+- `lib/game.ts`: validation, deterministic daily selection, scoring rules and tier colours.
 - `lib/bank.ts`: ten original practice prompts.
 - `PLAN.md`: architecture, implemented scope, and remaining production work.
 
@@ -52,5 +55,5 @@ Map boundaries are illustrative and do not adjudicate sovereignty. Country selec
 
 - World shapes: [world-atlas](https://github.com/topojson/world-atlas), ISC license, derived from public-domain [Natural Earth](https://www.naturalearthdata.com/about/terms-of-use/). Bundled as `public/world.json`.
 - Country registry: [mledoze/countries](https://github.com/mledoze/countries), ODbL-1.0. The derived country registry remains available in `lib/countries.json` under ODbL-1.0; see `DATA-LICENSE.md`.
-- Typefaces: DM Sans and Libre Caslon Display via Google Fonts, under the SIL Open Font License. System-font fallbacks are included.
+- Typefaces: Bricolage Grotesque and Geist Mono, self-hosted via Fontsource, under the SIL Open Font License. System-font fallbacks are included.
 - This is an independent project; it is not affiliated with Farflung LLC or Purdue University.

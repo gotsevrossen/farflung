@@ -20,12 +20,15 @@ function ring(indices){
   for(let i=1;i<projected.length;i++){
     const [px,py]=projected[i-1],[cx,cy]=projected[i];
     if(Math.abs(cx-px)>T){
-      const right=px>W/2;const dAcross=right?(W-px)+cx:px+(W-cx);const t=right?(W-px)/dAcross:px/dAcross;const ey=py+t*(cy-py);
+      const right=px>W/2;const dAcross=right?(W-px)+cx:px+(W-cx);const t=dAcross===0?0:right?(W-px)/dAcross:px/dAcross;const ey=py+t*(cy-py);
       cur.push(`L${right?W:0},${ey.toFixed(2)}`);cur.push('Z');parts.push(cur.join(''));
       cur=[`M${right?0:W},${ey.toFixed(2)}`];cur.push(`L${cx.toFixed(2)},${cy.toFixed(2)}`);
     }else{cur.push(`L${cx.toFixed(2)},${cy.toFixed(2)}`);}
   }
   cur.push('Z');parts.push(cur.join(''));
+  /* The ring is closed, so its last piece continues into its first. Join them; closing each
+     with its own Z draws a wedge across the map (seen on Russia). */
+  if(parts.length>1){const first=parts.shift();const last=parts.pop();parts.unshift(last.replace(/Z$/,'')+first.replace(/^M/,'L'));}
   return parts.join('');
 }
 const shapes=[];

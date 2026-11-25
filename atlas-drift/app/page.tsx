@@ -1,60 +1,406 @@
 'use client';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { ArrowRight, Check, ChevronDown, Compass, Copy, Flag, Globe2, HelpCircle, Leaf, LoaderCircle, MapPin, Mountain, RotateCcw, Settings2, Sparkles, Tent, Trophy, X } from 'lucide-react';
+import { useCallback, useEffect, useEffectEvent, useMemo, useRef, useState } from 'react';
+import { ArrowLeft, ArrowRight, BookOpen, Check, ChevronDown, CircleHelp, Copy, LoaderCircle, MapPin, RotateCcw, SlidersHorizontal, Sparkles, X } from 'lucide-react';
 import WorldMap from './world-map';
+import CountrySearch from './country-search';
 import countries from '@/lib/countries.json';
 import { TIERS, type PublicGame, type Result } from '@/lib/game';
 
-type Options={borders:boolean;names:boolean;timed:boolean};
-type Stage='play'|'reveal'|'results';
-type Saved={game:PublicGame;stage:Stage;selected:string|null;point:{x:number;y:number}|null;deadline:number|null;options:Options};
-type History={id:string;score:number;correct:number;date:string;mode:string};
-const defaults={borders:true,names:true,timed:false};
-const countryName=(code:string|null)=>countries.find(c=>c.code===code)?.name||'No pin';
-function today(){const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
-function read<T,>(key:string,fallback:T):T{try{return JSON.parse(localStorage.getItem(key)||'null')||fallback;}catch{return fallback;}}
-function write(key:string,value:unknown){try{localStorage.setItem(key,JSON.stringify(value));}catch{/* Storage is optional. */}}
-async function post<T,>(url:string,body:unknown):Promise<T>{const r=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});const data=await r.json() as T & {error?:string};if(!r.ok)throw new Error(data.error||'Please try again.');return data;}
-function Rose(){return <svg className="compass-rose" viewBox="0 0 130 150" aria-hidden="true"><text x="65" y="15" textAnchor="middle">N</text><circle cx="65" cy="79" r="40"/><circle cx="65" cy="79" r="34"/><path d="M65 31L73 71L113 79L73 87L65 127L57 87L17 79L57 71Z"/><path d="M65 31V79L57 71ZM113 79H65L73 71ZM65 127V79L73 87ZM17 79H65L57 87Z" fill="currentColor"/><path d="M37 51L65 69L93 51L75 79L93 107L65 89L37 107L55 79Z"/><circle cx="65" cy="79" r="4" fill="currentColor"/></svg>;}
+type Options = { borders: boolean; names: boolean; timed: boolean };
+type Stage = 'play' | 'reveal' | 'results';
+type Mode = 'daily' | 'practice' | 'ai';
+type Saved = { game: PublicGame; stage: Stage; selected: string | null; point: { x: number; y: number } | null; deadline: number | null; options: Options };
+type History = { id: string; score: number; correct: number; date: string; mode: string };
+type Modal = 'help' | 'settings' | 'connect' | 'stats';
 
-export default function Home(){
- const [ready,setReady]=useState(false),[screen,setScreen]=useState<'home'|'game'>('home'),[stage,setStage]=useState<Stage>('play'),[game,setGame]=useState<PublicGame|null>(null);
- const [options,setOptions]=useState<Options>(defaults),[gameOptions,setGameOptions]=useState<Options>(defaults),[selected,setSelected]=useState<string|null>(null),[point,setPoint]=useState<{x:number;y:number}|null>(null),[query,setQuery]=useState(''),[deadline,setDeadline]=useState<number|null>(null),[now,setNow]=useState(Date.now());
- const [modal,setModal]=useState<'help'|'settings'|'connect'|'stats'|null>(null),[tab,setTab]=useState<'new'|'daily'>('new'),[source,setSource]=useState<'practice'|'ai'>('practice'),[status,setStatus]=useState<{connected:boolean;model:string|null}|null>(null);
- const [busy,setBusy]=useState(false),[error,setError]=useState(''),[history,setHistory]=useState<History[]>([]),[copied,setCopied]=useState(false),[showAnswers,setShowAnswers]=useState(false),[review,setReview]=useState<number|null>(null);
- const submitting=useRef(false),submitRef=useRef<(code:string|null)=>void>(()=>{});
- useEffect(()=>{setOptions(read('atlas:options',defaults));setHistory(read('atlas:history',[]));const s=read<Saved|null>('atlas:current',null);if(s?.game?.token&&s.game.questions?.length===5&&['play','reveal','results'].includes(s.stage)){setGame(s.game);setStage(s.stage);setSelected(s.deadline&&s.deadline<Date.now()?null:s.selected);setPoint(s.point);setDeadline(s.deadline);setGameOptions(s.options||defaults);}setReady(true);fetch('/api/status').then(r=>r.json() as Promise<{connected:boolean;model:string|null}>).then(s=>{setStatus(s);if(s.connected)setSource('ai');}).catch(()=>setStatus({connected:false,model:null}));},[]);
- useEffect(()=>{if(ready)write('atlas:options',options);},[options,ready]);
- useEffect(()=>{if(!ready||!game)return;const s:Saved={game,stage,selected,point,deadline,options:gameOptions};write('atlas:current',s);if(game.mode==='daily')write(`atlas:daily:${game.id}`,s);},[ready,game,stage,selected,point,deadline,gameOptions]);
- useEffect(()=>{if(stage!=='results'||!game||game.results.length!==5)return;setHistory(old=>{if(old.some(h=>h.id===game.id))return old;const next=[{id:game.id,score:game.results.reduce((s,r)=>s+r.points,0),correct:game.results.filter(r=>r.points>0).length,date:today(),mode:game.mode},...old].slice(0,200);write('atlas:history',next);return next;});},[stage,game]);
- useEffect(()=>{if(!modal)return;const previous=document.activeElement as HTMLElement;const dialog=document.querySelector<HTMLElement>('[role="dialog"]');dialog?.focus();const keys=(e:KeyboardEvent)=>{if(e.key==='Escape')setModal(null);if(e.key!=='Tab'||!dialog)return;const list=dialog.querySelectorAll<HTMLElement>('button:not(:disabled),a[href],input,select');const first=list[0],last=list[list.length-1];if(e.shiftKey&&(document.activeElement===first||document.activeElement===dialog)){e.preventDefault();last?.focus();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first?.focus();}};document.addEventListener('keydown',keys);return()=>{document.removeEventListener('keydown',keys);previous?.focus();};},[modal]);
- const round=game?Math.min(4,stage==='reveal'?game.results.length-1:game.results.length):0,question=game?.questions[round],result=stage==='reveal'?game?.results[round]:null,total=game?.results.reduce((s,r)=>s+r.points,0)||0,tier=TIERS.find(t=>t.points===result?.points),remaining=deadline?Math.max(0,Math.ceil((deadline-now)/1000)):60,playing=screen==='game';
- const submit=useCallback(async(code:string|null)=>{if(!game||stage!=='play'||submitting.current)return;submitting.current=true;setBusy(true);setError('');try{const r=await post<{token:string;result:Result}>('/api/answer',{token:game.token,country:code});setGame({...game,token:r.token,results:[...game.results,r.result]});setStage('reveal');setShowAnswers(false);setDeadline(null);}catch(e){setError(e instanceof Error?e.message:'Could not drop your pin.');setDeadline(null);}finally{setBusy(false);submitting.current=false;}},[game,stage]);
- submitRef.current=submit;
- useEffect(()=>{if(!ready||stage!=='play'||!game||!deadline)return;const tick=()=>{const time=Date.now();setNow(time);if(time>=deadline)submitRef.current(selected);};tick();const timer=setInterval(tick,400);return()=>clearInterval(timer);},[ready,stage,game,deadline,selected]);
- function restore(s:Saved){setGame(s.game);setStage(s.stage);setSelected(s.deadline&&s.deadline<Date.now()?null:s.selected);setPoint(s.point);setDeadline(s.deadline);setGameOptions(s.options||defaults);setScreen('game');setError('');}
- async function start(mode:'practice'|'daily'|'ai'){if(busy)return;setError('');setReview(null);if(mode==='daily'){const s=read<Saved|null>(`atlas:daily:daily-${today()}`,null);if(s?.game){restore(s);return;}}setBusy(true);try{const next=await post<PublicGame>('/api/game',{mode,date:today(),previous:game?.questions.map(q=>q.prompt)||[]});setGame(next);setStage('play');setSelected(null);setPoint(null);setQuery('');setGameOptions({...options});setDeadline(options.timed?Date.now()+60000:null);setNow(Date.now());setScreen('game');setShowAnswers(false);}catch(e){setError(e instanceof Error?e.message:'Could not start this expedition.');}finally{setBusy(false);}}
- function next(){setSelected(null);setPoint(null);setQuery('');setShowAnswers(false);setError('');if(game?.results.length===5){setStage('results');return;}setStage('play');setNow(Date.now());setDeadline(gameOptions.timed?Date.now()+60000:null);}
- function select(code:string,p?:{x:number;y:number}){if(busy)return;setSelected(code);setPoint(p||null);setQuery(countryName(code));setError('');}
- async function share(){if(!game)return;const squares=game.results.map(r=>r.points===5000?'🟨':r.points>=2000?'🟦':r.points>0?'🟩':'⬜').join('');const text=`Atlas Drift · ${game.mode==='daily'?today():game.mode==='ai'?'Purdue AI expedition':'Practice expedition'}\n${squares}\n${total.toLocaleString()} km · ${game.results.filter(r=>r.points>0).length}/5 countries\n${window.location.origin}`;try{await navigator.clipboard.writeText(text);setCopied(true);setTimeout(()=>setCopied(false),2500);}catch{setError('Clipboard unavailable. Your result: '+text);}}
- return <main className={`app ${playing?'in-game':'at-home'}`}>
- <header className="masthead"><button className="brand" onClick={()=>{setScreen('home');setError('');}} aria-label="Atlas Drift home"><span className="brand-mark"><Compass size={27} strokeWidth={1.3}/></span><span>ATLAS <b>DRIFT</b><small>THE WORLD IS FULL OF POSSIBILITIES</small></span></button><nav><button onClick={()=>setModal('help')}><HelpCircle size={16}/><span>How to play</span></button><button onClick={()=>setModal('stats')}><Trophy size={16}/><span>Your journal</span></button><button className="icon-button" aria-label="Difficulty settings" onClick={()=>setModal('settings')}><Settings2 size={19}/></button></nav></header>
- <div className="map-stage"><WorldMap active={playing&&stage==='play'&&!busy} selected={playing?selected:null} point={point} onSelect={select} showBorders={playing?gameOptions.borders:true} showNames={playing?gameOptions.names:false} answers={result?.answers} wrong={!!result&&!result.points}/></div>
- {!playing?<><section className="home-intro"><div className="eyebrow"><span/>A DAILY DOSE OF ELSEWHERE</div><h1>Take the<br/><em>scenic route.</em></h1><p>A little knowledge. A little instinct.<br/>A whole world of unexpected answers.</p><div className="intro-rule"/><div className="intro-caption"><MapPin size={16}/>FIVE PROMPTS. ONE WORLD. YOUR WAY.</div></section>
- <section className="expedition-card home-card" aria-label="Start an expedition"><div className="card-tabs"><button className={tab==='new'?'active':''} onClick={()=>{setTab('new');setError('');}}><Compass size={16}/>Open expedition</button><button className={tab==='daily'?'active':''} onClick={()=>{setTab('daily');setError('');}}>The daily trail <i/></button></div><div className="card-inner"><div className="overline">{tab==='daily'?new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'}).toUpperCase():'NO TWO JOURNEYS ALIKE'}</div><h2>{tab==='daily'?'A fresh day.\nA new direction.':'Where will your\ncuriosity take you?'}</h2><p className="card-description">Find a country that fits each prompt.<br/>The less obvious your answer, the further you go.</p><div className="journey-specs"><span><Flag size={18}/><b>5</b> prompts</span><span><Globe2 size={18}/><b>195</b> countries</span><span><Leaf size={18}/>{options.timed?'60 sec / pin':'No rush'}</span></div>
- {tab==='new'?<div className="source-picker"><span>YOUR FIELD GUIDE</span><div><button className={source==='practice'?'chosen':''} onClick={()=>setSource('practice')}><Compass size={14}/>Practice</button><button className={source==='ai'?'chosen':''} onClick={()=>{if(!status?.connected){setModal('connect');return;}setSource('ai');}}><Sparkles size={14}/>Purdue AI{!status?.connected&&<i/>}</button></div><small>{source==='ai'?'New questions & country scores, generated for every game.':'Handwritten questions, shuffled into a new route.'}</small></div>:<div className="daily-note"><Mountain size={23}/><span>A shared route from the field guide.<small>One attempt per day on this browser. Resets at local midnight.</small></span></div>}
- <button className="primary start-button" disabled={busy||!ready} onClick={()=>start(tab==='daily'?'daily':source)}>{busy?<><LoaderCircle className="spin" size={18}/>{source==='ai'&&tab==='new'?'Charting your expedition…':'Unfolding your map…'}</>:<>Let’s explore <ArrowRight size={19}/></>}</button>{busy&&source==='ai'&&<small className="generation-note">Purdue is writing five prompts and their answer lists. This can take up to two minutes.</small>}{error&&<p className="error-message" role="alert">{error}</p>}{game&&stage!=='results'&&<button className="resume-button" onClick={()=>{setScreen('game');setError('');}}>Pick up where you left off <ArrowRight size={14}/></button>}<div className="card-bottom"><span/>Go beyond the obvious.<span/></div></div></section>
- <div className="field-note"><span>FIELD NOTE / 001</span><p>Sometimes the best answer<br/>is the one a little further away.</p><i/></div><Rose/><div className="rarity-strip"><span>THE UNEXPECTED TAKES YOU FURTHER</span><div>{TIERS.map(t=><span key={t.name}><i style={{background:t.color}}/>{t.name}</span>)}</div></div></>:<>
- <div className="game-topline"><button onClick={()=>{setScreen('home');setError('');}}>← Back to base</button><span><i/>{game?.mode==='ai'?'PURDUE AI EXPEDITION':game?.mode==='daily'?'THE DAILY TRAIL':'PRACTICE EXPEDITION'}</span><span className="distance"><Compass size={16}/>{total.toLocaleString()}<small>km travelled</small></span></div>
- {stage!=='results'?<section className="expedition-card game-card"><div className="round-track">{Array.from({length:5},(_,i)=><span key={i} className={i===round?'current':i<round?'done':''}>{i<round?<Check size={12}/>:String(i+1).padStart(2,'0')}</span>)}<small>YOUR FIVE-PIN JOURNEY</small></div><div className="card-inner"><div className="question-meta"><span className="overline">{question?.category} <span>/ {String(round+1).padStart(2,'0')}</span></span>{gameOptions.timed&&stage==='play'&&<span className={`timer ${remaining<15?'urgent':''}`}>{remaining}s</span>}</div><h2 className="question-heading">{question?.prompt}</h2><details className="scope"><summary>The fine print <ChevronDown size={12}/></summary><p>{question?.rule}</p></details>
- {stage==='play'?<><div className="selection-box"><MapPin size={20}/><div><small>YOUR PIN</small><strong>{selected?(gameOptions.names?countryName(selected):'Country selected'):'Somewhere out there…'}</strong></div>{selected&&<Check size={16}/>}</div>{gameOptions.names&&<div className="country-search"><label htmlFor="country-search">Or find a country by name</label><div><Globe2 size={15}/><input id="country-search" list="country-options" value={query} placeholder="Start typing a country…" autoComplete="off" onChange={e=>{setQuery(e.target.value);const c=countries.find(c=>c.name.toLowerCase()===e.target.value.toLowerCase());if(c)select(c.code);else{setSelected(null);setPoint(null);}}}/><datalist id="country-options">{countries.map(c=><option value={c.name} key={c.code}/>)}</datalist></div></div>}<button className="primary" disabled={!selected||busy} onClick={()=>submit(selected)}>{busy?<><LoaderCircle size={17} className="spin"/>Dropping your pin…</>:<><MapPin size={17}/>Drop pin <ArrowRight size={17}/></>}</button><p className="pin-hint">One country. One chance. Trust your curiosity.</p></>:<><div className={`result-banner ${result?.points?'correct':'miss'}`} style={result?.points?{borderColor:tier?.color}:undefined}><Sparkles size={25}/><div><small>{result?.points?tier?.name.toUpperCase():'A DETOUR'}</small><strong>{result?.points?`+${result.points.toLocaleString()} km`:'No distance this time'}</strong></div></div><p className="answer-fact"><b>{countryName(result?.country||null)}.</b> {result?.fact}</p><button className="answers-toggle" onClick={()=>setShowAnswers(!showAnswers)}>{showAnswers?'Fold up the answers':`Explore all ${result?.answers.length} answers`}<ChevronDown size={15}/></button>{showAnswers&&<AnswerList result={result!}/>}<button className="primary" onClick={next}>{game?.results.length===5?<><Tent size={17}/>On to camp</>:<>Next prompt</>}<ArrowRight size={18}/></button></>}
- {error&&<p className="error-message" role="alert">{error}</p>}{game?.mode==='ai'&&<p className="ai-note"><Sparkles size={11}/>AI-authored · rarity scores are editorial estimates</p>}</div></section>:<section className="expedition-card results-card"><div className="results-top"><Tent size={35} strokeWidth={1.2}/><span className="overline">WELCOME BACK TO CAMP</span><h2>A world well wandered.</h2><strong>{total.toLocaleString()}<span> km</span></strong><p>{game?.results.filter(r=>r.points>0).length} of 5 countries found · {game?.results.filter(r=>r.points===5000).length} hidden gems</p></div><div className="result-rows">{game?.results.map((r,i)=><div key={i}><button className="result-row" onClick={()=>setReview(review===i?null:i)} aria-expanded={review===i}><span className="result-index">0{i+1}</span><span><small>{game.questions[i].category}</small><b>{countryName(r.country)}</b></span><span className="result-points" style={{color:TIERS.find(t=>t.points===r.points)?.color||'#987669'}}>{r.points?`+${r.points.toLocaleString()}`:'Miss'}</span><ChevronDown size={14}/></button>{review===i&&<div className="review"><h3>{r.question}</h3><p>{r.fact}</p><AnswerList result={r}/></div>}</div>)}</div><div className="results-actions"><button className="primary" onClick={share}>{copied?<Check size={17}/>:<Copy size={16}/>} {copied?'Copied to your clipboard':'Share your journey'}</button><button className="secondary" disabled={busy} onClick={()=>start(game?.mode==='ai'?'ai':'practice')}><RotateCcw size={15}/>{busy?'Charting your route…':'A new expedition'}</button><button className="text-button" onClick={()=>setScreen('home')}>Back to base</button>{error&&<p role="alert" className="error-message">{error}</p>}</div></section>}
- <div className="game-map-note"><Rose/><span>{stage==='reveal'?'Every answer is another way to see the world.':'There’s always another way to get there.'}</span></div></>}
- <footer className="footer"><span>Made for the endlessly curious.</span><button onClick={()=>setModal('connect')}><i className={`connection-dot ${status?.connected?'connected':''}`}/>{status?.connected?'Purdue GenAI connected':'Purdue GenAI Studio'}<ArrowRight size={12}/></button><span>AN INDEPENDENT GEOGRAPHY ADVENTURE</span></footer>
- {modal&&<div className="modal-backdrop" onClick={e=>{if(e.target===e.currentTarget)setModal(null);}}><section className="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" tabIndex={-1}><button className="close-modal icon-button" aria-label="Close dialog" onClick={()=>setModal(null)}><X size={20}/></button>
- {modal==='help'?<><div className="modal-symbol"><Compass size={28}/></div><span className="overline">A FIELD GUIDE TO ATLAS DRIFT</span><h2 id="modal-title">Follow your curiosity.</h2><div className="how-steps"><div><span>01</span><p><b>Read the prompt.</b> Several countries fit. Pick one that meets the rule.</p></div><div><span>02</span><p><b>Place your pin.</b> Click a country, zoom in for the little ones, or find it by name. Drop your pin to lock it in.</p></div><div><span>03</span><p><b>Go a little further.</b> Less obvious correct answers earn more distance. A miss earns zero. Five pins take you back to camp.</p></div></div><div className="tier-guide">{TIERS.map(t=><div key={t.name}><i style={{background:t.color}}/>{t.name}<b>{t.points.toLocaleString()} km</b></div>)}</div><p className="modal-note">Map keys: arrows to pan, + / − to zoom, Enter or Space to place a pin at the center. Use Drop pin to submit. Represented territories count for their parent country; disputed regions are excluded. You may reuse a country on a later prompt.</p><button className="primary" onClick={()=>setModal(null)}>Got it. Let’s wander.<ArrowRight size={17}/></button></>:modal==='settings'?<><div className="modal-symbol"><Settings2 size={27}/></div><span className="overline">CHOOSE YOUR CHALLENGE</span><h2 id="modal-title">Your kind of adventure.</h2><p className="modal-intro">Take the gentle path or go off the beaten track. Changes apply to your next expedition.</p><Toggle title="Country borders" description="A little guidance around the edges." checked={options.borders} onChange={()=>setOptions(s=>({...s,borders:!s.borders}))}/><Toggle title="Country names" description="See your selected country and find it by name." checked={options.names} onChange={()=>setOptions(s=>({...s,names:!s.names}))}/><Toggle title="Race the clock" description="60 seconds per pin. The clock keeps running while away." checked={options.timed} onChange={()=>setOptions(s=>({...s,timed:!s.timed}))}/><p className="modal-note">When time runs out, your selected country is submitted. No pin means a miss.</p><button className="primary" onClick={()=>setModal(null)}>That’s my route<Check size={17}/></button></>:modal==='stats'?<><div className="modal-symbol"><Trophy size={29}/></div><span className="overline">YOUR TRAVELLER’S JOURNAL</span><h2 id="modal-title">Miles of memories.</h2><div className="stats-grid"><div><strong>{history.length}</strong><span>expeditions</span></div><div><strong>{Math.max(0,...history.map(h=>h.score)).toLocaleString()}</strong><span>best distance · km</span></div><div><strong>{history.length?Math.round(history.reduce((s,h)=>s+h.correct,0)/(history.length*5)*100):0}%</strong><span>countries found</span></div></div>{history.length?<div className="journal-list">{history.slice(0,8).map(h=><div key={h.id}><span>{h.date}<small>{h.mode==='ai'?'Purdue AI':h.mode==='daily'?'Daily trail':'Practice'}</small></span><b>{h.score.toLocaleString()} km</b></div>)}</div>:<p className="modal-intro">Your journal is waiting for its first story. Finish an expedition to leave your first mark.</p>}<p className="modal-note">Saved on this browser. Clearing browser storage resets your journal and daily attempt.</p></>:<><div className="modal-symbol"><Sparkles size={29}/></div><span className="overline">A NEW WORLD, EVERY TIME</span><h2 id="modal-title">Meet your AI field guide.</h2><p className="modal-intro">Purdue GenAI Studio writes five original prompts, accepted countries, field notes, and rarity points whenever you start an AI expedition.</p><div className="connection-status"><i className={`connection-dot ${status?.connected?'connected':''}`}/>{status?.connected?`Connected · ${status.model}`:'Server configuration needed'}</div><p className="modal-note">For local play, add these values to the ignored <code>.dev.vars</code> file, then restart. For the hosted app, add them as runtime secrets in Sites.</p><pre>GENAI_API_KEY=your_purdue_key{'\n'}GENAI_MODEL=your_model_id{'\n'}GAME_SECRET=a_long_random_secret</pre><p className="modal-note">Create a key in GenAI Studio → Settings → Account → API Keys. Use the exact model ID from <code>/api/models</code>. Optional: <code>GENAI_BACKEND=vllm</code> or <code>ollama</code> for structured output.</p><a className="documentation-link" href="https://docs.rcac.purdue.edu/services/genai/api/" target="_blank" rel="noreferrer">Purdue’s API setup guide<ArrowRight size={14}/></a><p className="modal-note">Keys stay on the server. Output is checked for structure and country codes; facts and completeness can still be wrong. Generated source links are reading suggestions, not verified citations. Practice and the daily trail use handwritten questions.</p><button className="primary" onClick={()=>setModal(null)}>Back to the map<ArrowRight size={17}/></button></>}
- </section></div>}
- </main>;
+const defaults: Options = { borders: true, names: true, timed: false };
+const ROUND_SECONDS = 60;
+const MODES: Record<Mode, { label: string; note: string }> = {
+  daily: { label: 'Daily trail', note: 'The same five prompts for everyone today. One attempt.' },
+  practice: { label: 'Practice', note: 'Shuffled from the handwritten bank. Play as often as you like.' },
+  ai: { label: 'Purdue AI', note: 'Five brand-new prompts for every game. Takes up to two minutes.' },
+};
+const MODE_NAMES: Record<string, string> = { daily: 'Daily trail', practice: 'Practice', ai: 'Purdue AI' };
+
+const countryName = (code: string | null) => countries.find(c => c.code === code)?.name || 'No pin';
+const tierOf = (points: number) => TIERS.findIndex(t => t.points === points);
+const km = (n: number) => n.toLocaleString('en-US');
+function today() { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; }
+function read<T,>(key: string, fallback: T): T { try { return JSON.parse(localStorage.getItem(key) || 'null') || fallback; } catch { return fallback; } }
+function write(key: string, value: unknown) { try { localStorage.setItem(key, JSON.stringify(value)); } catch { /* Storage is optional. */ } }
+async function post<T,>(url: string, body: unknown): Promise<T> {
+  const r = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+  const data = await r.json().catch(() => ({})) as T & { error?: string };
+  if (!r.ok) throw new Error(data.error || 'Something went wrong. Please try again.');
+  return data;
 }
-function Toggle({title,description,checked,onChange}:{title:string;description:string;checked:boolean;onChange:()=>void}){return <div className="setting-row"><span><b>{title}</b><small>{description}</small></span><button className={`toggle ${checked?'on':''}`} role="switch" aria-label={title} aria-checked={checked} onClick={onChange}><span/></button></div>;}
-function AnswerList({result}:{result:Result}){return <div className="answer-list">{[...result.answers].sort((a,b)=>b.points-a.points).map(a=><div key={a.country}><span><i style={{background:TIERS.find(t=>t.points===a.points)?.color}}/>{countryName(a.country)}{a.country===result.country&&<Check size={12}/>}</span><b>{a.points.toLocaleString()}</b></div>)}<a href={result.source} target="_blank" rel="noreferrer">Read more about this prompt ↗</a></div>;}
+
+export default function Home() {
+  const [ready, setReady] = useState(false);
+  const [screen, setScreen] = useState<'home' | 'game'>('home');
+  const [stage, setStage] = useState<Stage>('play');
+  const [game, setGame] = useState<PublicGame | null>(null);
+  const [options, setOptions] = useState<Options>(defaults);
+  const [gameOptions, setGameOptions] = useState<Options>(defaults);
+  const [selected, setSelected] = useState<string | null>(null);
+  const [point, setPoint] = useState<{ x: number; y: number } | null>(null);
+  const [deadline, setDeadline] = useState<number | null>(null);
+  const [now, setNow] = useState(0);
+  const [modal, setModal] = useState<Modal | null>(null);
+  const [mode, setMode] = useState<Mode>('daily');
+  const [status, setStatus] = useState<{ connected: boolean; model: string | null } | null>(null);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState('');
+  const [history, setHistory] = useState<History[]>([]);
+  const [copied, setCopied] = useState(false);
+  const [review, setReview] = useState<number | null>(null);
+  const submitting = useRef(false);
+  const heading = useRef<HTMLHeadingElement>(null);
+
+  /* Browser storage is only readable after mount; hydrating it here avoids a server/client mismatch. */
+  useEffect(() => {
+    /* eslint-disable react-hooks/set-state-in-effect */
+    setOptions(read('atlas:options', defaults));
+    setHistory(read('atlas:history', []));
+    setMode(read<Mode>('atlas:mode', 'daily'));
+    const s = read<Saved | null>('atlas:current', null);
+    if (s?.game?.token && s.game.questions?.length === 5 && ['play', 'reveal', 'results'].includes(s.stage)) {
+      setGame(s.game); setStage(s.stage); setSelected(s.deadline && s.deadline < Date.now() ? null : s.selected);
+      setPoint(s.point); setDeadline(s.deadline); setGameOptions(s.options || defaults);
+    }
+    setReady(true);
+    /* eslint-enable react-hooks/set-state-in-effect */
+    fetch('/api/status').then(r => r.json() as Promise<{ connected: boolean; model: string | null }>)
+      .then(setStatus).catch(() => setStatus({ connected: false, model: null }));
+  }, []);
+  useEffect(() => { if (ready) write('atlas:options', options); }, [options, ready]);
+  useEffect(() => { if (ready) write('atlas:mode', mode); }, [mode, ready]);
+  useEffect(() => {
+    if (!ready || !game) return;
+    const s: Saved = { game, stage, selected, point, deadline, options: gameOptions };
+    write('atlas:current', s);
+    if (game.mode === 'daily') write(`atlas:daily:${game.id}`, s);
+  }, [ready, game, stage, selected, point, deadline, gameOptions]);
+  /* Today's finished daily score, if any. Re-read whenever the game moves on. */
+  const dailyDone = useMemo(() => {
+    if (!ready) return null;
+    const id = `daily-${today()}`;
+    /* The live game is fresher than storage, which is written after this render. */
+    const s = game?.id === id ? { game, stage } : read<Saved | null>(`atlas:daily:${id}`, null);
+    return s?.stage === 'results' ? s.game.results.reduce((t, r) => t + r.points, 0) : null;
+  }, [ready, game, stage]);
+  function record(g: PublicGame) {
+    setHistory(old => {
+      if (old.some(h => h.id === g.id)) return old;
+      const next = [{ id: g.id, score: g.results.reduce((s, r) => s + r.points, 0), correct: g.results.filter(r => r.points > 0).length, date: today(), mode: g.mode }, ...old].slice(0, 200);
+      write('atlas:history', next);
+      return next;
+    });
+  }
+
+  const round = game ? Math.min(4, stage === 'reveal' ? game.results.length - 1 : game.results.length) : 0;
+  const question = game?.questions[round];
+  const result = stage === 'reveal' ? game?.results[round] : null;
+  const total = game?.results.reduce((s, r) => s + r.points, 0) || 0;
+  const remaining = deadline ? Math.max(0, Math.ceil((deadline - now) / 1000)) : ROUND_SECONDS;
+  const playing = screen === 'game' && !!game;
+  const inProgress = !!game && stage !== 'results';
+
+  const submit = useCallback(async (code: string | null) => {
+    if (!game || stage !== 'play' || submitting.current) return;
+    submitting.current = true; setBusy(true); setError('');
+    try {
+      const r = await post<{ token: string; result: Result }>('/api/answer', { token: game.token, country: code });
+      setGame({ ...game, token: r.token, results: [...game.results, r.result] });
+      setStage('reveal'); setDeadline(null);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Your pin didn’t go through. Try again.');
+      setDeadline(null);
+    } finally { setBusy(false); submitting.current = false; }
+  }, [game, stage]);
+  const timeUp = useEffectEvent(() => submit(selected));
+
+  useEffect(() => {
+    if (!ready || stage !== 'play' || !game || !deadline) return;
+    const tick = () => { const time = Date.now(); setNow(time); if (time >= deadline) timeUp(); };
+    tick();
+    const timer = setInterval(tick, 250);
+    return () => clearInterval(timer);
+  }, [ready, stage, game, deadline]);
+
+  /* Each screen and round starts at the top of the panel. */
+  const panelKey = playing ? `${stage}-${round}` : 'home';
+  useEffect(() => { document.getElementById('panel')?.scrollTo({ top: 0 }); }, [panelKey]);
+
+  /* Move focus to the new prompt so keyboard and screen-reader users follow the round change. */
+  useEffect(() => { if (playing && stage !== 'reveal') heading.current?.focus({ preventScroll: true }); }, [playing, stage, round]);
+
+  function restore(s: Saved) {
+    if (s.stage === 'results') record(s.game);
+    setGame(s.game); setStage(s.stage); setSelected(s.deadline && s.deadline < Date.now() ? null : s.selected);
+    setPoint(s.point); setDeadline(s.deadline); setGameOptions(s.options || defaults); setScreen('game'); setError('');
+  }
+  async function start(next: Mode) {
+    if (busy) return;
+    setError(''); setReview(null);
+    if (next === 'daily') { const s = read<Saved | null>(`atlas:daily:daily-${today()}`, null); if (s?.game) { restore(s); return; } }
+    setBusy(true);
+    try {
+      const g = await post<PublicGame>('/api/game', { mode: next, date: today(), previous: game?.questions.map(q => q.prompt) || [] });
+      setGame(g); setStage('play'); setSelected(null); setPoint(null); setGameOptions({ ...options });
+      setDeadline(options.timed ? Date.now() + ROUND_SECONDS * 1000 : null); setNow(Date.now()); setScreen('game');
+    } catch (e) { setError(e instanceof Error ? e.message : 'Couldn’t start this expedition. Try again.'); }
+    finally { setBusy(false); }
+  }
+  function nextRound() {
+    setSelected(null); setPoint(null); setError('');
+    if (game?.results.length === 5) { setStage('results'); record(game); return; }
+    setStage('play'); setNow(Date.now()); setDeadline(gameOptions.timed ? Date.now() + ROUND_SECONDS * 1000 : null);
+  }
+  function select(code: string, p?: { x: number; y: number }) { if (busy || stage !== 'play') return; setSelected(code); setPoint(p || null); setError(''); }
+  function goHome() { setScreen('home'); setError(''); }
+  async function share() {
+    if (!game) return;
+    const squares = game.results.map(r => r.points === 5000 ? '🟨' : r.points >= 2000 ? '🟦' : r.points > 0 ? '🟩' : '⬜').join('');
+    const label = game.mode === 'daily' ? `Daily trail ${today()}` : game.mode === 'ai' ? 'Purdue AI expedition' : 'Practice expedition';
+    const text = `Atlas Drift: ${label}\n${squares}\n${km(total)} km, ${game.results.filter(r => r.points > 0).length}/5 correct\n${window.location.origin}`;
+    try { await navigator.clipboard.writeText(text); setCopied(true); setTimeout(() => setCopied(false), 2500); }
+    catch { setError(`Clipboard unavailable. Your result: ${text}`); }
+  }
+
+  const ctaLabel = mode === 'daily' ? (dailyDone !== null ? 'View today’s result' : 'Start daily trail') : mode === 'ai' ? 'Generate expedition' : 'Start practice';
+  return <div className={`app ${playing ? 'is-playing' : 'is-home'}`}>
+    <a className="skip-link" href="#panel">Skip to {playing ? 'prompt' : 'game setup'}</a>
+    <header className="topbar">
+      <button type="button" className="brand" onClick={goHome} aria-label="Atlas Drift, home">
+        <svg viewBox="0 0 40 40" aria-hidden="true" className="brand-mark"><circle cx="17" cy="21" r="10" /><circle cx="30" cy="10" r="4.5" /></svg>
+        <span>Atlas Drift</span>
+      </button>
+      <nav aria-label="Game">
+        <button type="button" onClick={() => setModal('help')} aria-label="How to play"><CircleHelp size={18} strokeWidth={1.75} /><span>How to play</span></button>
+        <button type="button" onClick={() => setModal('stats')} aria-label="Journal"><BookOpen size={18} strokeWidth={1.75} /><span>Journal</span></button>
+        <button type="button" onClick={() => setModal('settings')} aria-label="Difficulty"><SlidersHorizontal size={18} strokeWidth={1.75} /><span>Difficulty</span></button>
+      </nav>
+    </header>
+
+    <main className="workspace">
+
+      <aside className="panel" id="panel" tabIndex={-1}>
+        <div className="panel-content" key={panelKey}>
+          {!playing ? <>
+            <h1 className="home-title">Pin the country nobody else would.</h1>
+            <p className="lede">Five prompts, one pin each. Every correct answer scores, and the less obvious it is, the further you travel.</p>
+
+            <fieldset className="modes">
+              <legend className="field-label">Choose an expedition</legend>
+              {(Object.keys(MODES) as Mode[]).map(m => {
+                const locked = m === 'ai' && !status?.connected;
+                return <label key={m} className={`mode ${mode === m ? 'is-chosen' : ''} ${locked ? 'is-locked' : ''}`}>
+                  <input type="radio" name="mode" value={m} checked={mode === m} disabled={locked} onChange={() => setMode(m)} />
+                  <span className="mode-text">
+                    <span className="mode-name">{MODES[m].label}
+                      {m === 'daily' && dailyDone !== null && <span className="tag">Done · {km(dailyDone)} km</span>}
+                      {locked && <span className="tag">Setup needed</span>}
+                    </span>
+                    <span className="mode-note">{MODES[m].note}</span>
+                  </span>
+                  {locked && <button type="button" className="link" onClick={() => setModal('connect')}>Connect</button>}
+                </label>;
+              })}
+            </fieldset>
+
+            <div className="difficulty-line">
+              <span>{options.borders ? 'Borders on' : 'No borders'}, {options.names ? 'names on' : 'no names'}, {options.timed ? `${ROUND_SECONDS}s per pin` : 'untimed'}</span>
+              <button type="button" className="link" onClick={() => setModal('settings')}>Change</button>
+            </div>
+
+            <div className="sticky-action">
+              <button type="button" className="btn btn-primary btn-block" disabled={busy || !ready} onClick={() => start(mode)}>
+                {busy ? <><LoaderCircle className="spin" size={18} />{mode === 'ai' ? 'Writing your prompts' : 'Unfolding the map'}</> : <>{ctaLabel}<ArrowRight size={18} /></>}
+              </button>
+            </div>
+            {busy && mode === 'ai' && <p className="hint" role="status">Purdue is writing five prompts and their answer lists. This can take up to two minutes.</p>}
+            {error && <p className="error" role="alert">{error}</p>}
+            {inProgress && !busy && <button type="button" className="resume" onClick={() => { setScreen('game'); setError(''); }}>
+              <span><b>Resume {MODE_NAMES[game!.mode].toLowerCase()}</b> Round {round + 1} of 5, {km(total)} km so far</span><ArrowRight size={16} />
+            </button>}
+
+            <section className="scoring" aria-labelledby="scoring-title">
+              <h2 id="scoring-title" className="field-label">Scoring</h2>
+              <TierScale />
+            </section>
+          </> : stage !== 'results' ? <>
+            <div className="hud">
+              <button type="button" className="btn-icon" onClick={goHome} aria-label="Back to home"><ArrowLeft size={18} strokeWidth={1.75} /></button>
+              <ol className="rounds" aria-label={`Round ${round + 1} of 5`}>
+                {Array.from({ length: 5 }, (_, i) => {
+                  const r = game!.results[i];
+                  const state = r ? (r.points ? `tier-${tierOf(r.points)}` : 'miss') : i === round ? 'current' : '';
+                  return <li key={i} className={state} aria-label={r ? `Round ${i + 1}: ${r.points ? `${km(r.points)} km` : 'miss'}` : `Round ${i + 1}`} />;
+                })}
+              </ol>
+              <span className="score"><span className="mono">{km(total)}</span> km</span>
+            </div>
+
+            <p className="meta"><span>{question?.category}</span><span className="mono">{round + 1}/5</span></p>
+            <h1 className="prompt" ref={heading} tabIndex={-1}>{question?.prompt}</h1>
+            <details className="rules"><summary>Rules<ChevronDown size={14} /></summary><p>{question?.rule}</p></details>
+
+            {stage === 'play' ? <>
+              {gameOptions.timed && <div className={`timer ${remaining <= 15 ? 'is-urgent' : ''}`} role="timer" aria-label={`${remaining} seconds left`}>
+                <div className="timer-track"><div className="timer-fill" style={{ transform: `scaleX(${remaining / ROUND_SECONDS})` }} /></div>
+                <span className="mono">{remaining}s</span>
+              </div>}
+              <div className={`pick ${selected ? 'has-pick' : ''}`} aria-live="polite">
+                <MapPin size={18} strokeWidth={1.75} aria-hidden="true" />
+                <span><span className="field-label">Your pin</span>
+                  <strong>{selected ? (gameOptions.names ? countryName(selected) : 'Country selected') : 'Tap the map or search'}</strong></span>
+              </div>
+              {gameOptions.names && <CountrySearch onPick={code => select(code)} disabled={busy} />}
+              <div className="sticky-action">
+                <button type="button" className="btn btn-primary btn-block" disabled={!selected || busy} onClick={() => submit(selected)}>
+                  {busy ? <><LoaderCircle size={18} className="spin" />Checking</> : <>Drop pin<ArrowRight size={18} /></>}
+                </button>
+              </div>
+            </> : result && <>
+              <div className={`verdict ${result.points ? `tier-${tierOf(result.points)}` : 'is-miss'}`} role="status">
+                <span className="verdict-label">{result.points ? TIERS[tierOf(result.points)].name : 'Not on the list'}</span>
+                <strong className="mono">{result.points ? `+${km(result.points)} km` : '0 km'}</strong>
+              </div>
+              <p className="fact"><b>{countryName(result.country)}.</b> {result.fact}</p>
+              <details className="answers">
+                <summary>All {result.answers.length} accepted answers<ChevronDown size={14} /></summary>
+                <AnswerList result={result} />
+              </details>
+              <div className="sticky-action">
+                <button type="button" className="btn btn-primary btn-block" onClick={nextRound}>
+                  {game?.results.length === 5 ? 'See results' : 'Next prompt'}<ArrowRight size={18} />
+                </button>
+              </div>
+            </>}
+            {error && <p className="error" role="alert">{error}</p>}
+            {game?.mode === 'ai' && <p className="hint"><Sparkles size={13} aria-hidden="true" /> AI-written prompt. Rarity is an editorial estimate.</p>}
+          </> : <>
+            <div className="hud">
+              <button type="button" className="btn-icon" onClick={goHome} aria-label="Back to home"><ArrowLeft size={18} strokeWidth={1.75} /></button>
+              <span className="hud-title">{MODE_NAMES[game!.mode]}</span>
+            </div>
+            <h1 className="total" ref={heading} tabIndex={-1}><span className="mono">{km(total)}</span> km</h1>
+            <p className="lede">{game!.results.filter(r => r.points > 0).length} of 5 correct{game!.results.some(r => r.points === 5000) && `, ${game!.results.filter(r => r.points === 5000).length} Farflung`}.</p>
+            <ol className="recap">
+              {game!.results.map((r, i) => <li key={i}>
+                <button type="button" className="recap-row" onClick={() => setReview(review === i ? null : i)} aria-expanded={review === i}>
+                  <span className={`chip ${r.points ? `tier-${tierOf(r.points)}` : 'miss'}`} aria-hidden="true" />
+                  <span className="recap-text"><small>{game!.questions[i].category}</small><b>{countryName(r.country)}</b></span>
+                  <span className="mono recap-points">{r.points ? `+${km(r.points)}` : 'Miss'}</span>
+                  <ChevronDown size={16} className="chev" />
+                </button>
+                {review === i && <div className="recap-detail"><p className="recap-q">{r.question}</p><p>{r.fact}</p><AnswerList result={r} /></div>}
+              </li>)}
+            </ol>
+            <div className="actions">
+              <button type="button" className="btn btn-primary" onClick={share}>{copied ? <Check size={18} /> : <Copy size={17} />}{copied ? 'Copied' : 'Copy result'}</button>
+              <button type="button" className="btn btn-secondary" disabled={busy} onClick={() => start(game?.mode === 'ai' ? 'ai' : 'practice')}>
+                {busy ? <LoaderCircle size={17} className="spin" /> : <RotateCcw size={17} />}{game?.mode === 'ai' ? 'New AI expedition' : 'Play practice'}
+              </button>
+            </div>
+            {error && <p className="error" role="alert">{error}</p>}
+          </>}
+        </div>
+      </aside>
+      <section className="map-area" aria-label="Map">
+        <WorldMap active={playing && stage === 'play' && !busy} selected={playing ? selected : null} point={playing ? point : null} onSelect={select}
+          showBorders={playing ? gameOptions.borders : true} showNames={playing ? gameOptions.names : false}
+          answers={playing && result ? result.answers : undefined} wrong={!!result && !result.points}
+          frameKey={playing ? `${game?.id}-${round}-${stage === 'reveal' ? 'r' : 'p'}` : 'home'} />
+        {playing && stage === 'reveal' && <MapLegend />}
+      </section>
+    </main>
+
+    <Dialog open={modal !== null} onClose={() => setModal(null)} title={modal === 'help' ? 'How to play' : modal === 'settings' ? 'Difficulty' : modal === 'stats' ? 'Journal' : 'Connect Purdue AI'}>
+      {modal === 'help' && <>
+        <ol className="steps">
+          <li><b>Read the prompt.</b> Several countries fit. Pick any one that follows the rules.</li>
+          <li><b>Place your pin.</b> Tap a country, zoom in for small ones, or search by name. Then press Drop pin.</li>
+          <li><b>Go further.</b> Less obvious correct answers score more. A wrong pin scores zero.</li>
+        </ol>
+        <TierScale />
+        <p className="note">Keyboard: arrows pan, + and − zoom, 0 resets, Enter pins the country under the crosshair. Territories count for their parent country. Disputed regions can’t be picked. You can reuse a country on a later prompt.</p>
+        <button type="button" className="btn btn-primary btn-block" onClick={() => setModal(null)}>Got it</button>
+      </>}
+      {modal === 'settings' && <>
+        <p className="note">Applies to your next expedition.</p>
+        <Toggle title="Country borders" description="Outline every country on the map." checked={options.borders} onChange={() => setOptions(s => ({ ...s, borders: !s.borders }))} />
+        <Toggle title="Country names" description="Show names on hover and allow search." checked={options.names} onChange={() => setOptions(s => ({ ...s, names: !s.names }))} />
+        <Toggle title="Timer" description={`${ROUND_SECONDS} seconds per pin. Your selection is submitted when time runs out.`} checked={options.timed} onChange={() => setOptions(s => ({ ...s, timed: !s.timed }))} />
+        <button type="button" className="btn btn-primary btn-block" onClick={() => setModal(null)}>Done</button>
+      </>}
+      {modal === 'stats' && <>
+        <dl className="stats">
+          <div><dt>Expeditions</dt><dd className="mono">{history.length}</dd></div>
+          <div><dt>Best</dt><dd className="mono">{km(Math.max(0, ...history.map(h => h.score)))} km</dd></div>
+          <div><dt>Correct pins</dt><dd className="mono">{history.length ? Math.round(history.reduce((s, h) => s + h.correct, 0) / (history.length * 5) * 100) : 0}%</dd></div>
+        </dl>
+        {history.length ? <ol className="journal">{history.slice(0, 10).map(h => <li key={h.id}>
+          <span>{new Date(`${h.date}T12:00`).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}<small>{MODE_NAMES[h.mode] || h.mode}</small></span>
+          <span className="mono">{h.correct}/5</span>
+          <b className="mono">{km(h.score)} km</b>
+        </li>)}</ol> : <p className="empty">No expeditions yet. Finish one and it will show up here.</p>}
+        <p className="note">Saved in this browser only. Clearing site data resets your journal and today’s attempt.</p>
+      </>}
+      {modal === 'connect' && <>
+        <p>Purdue GenAI Studio writes five new prompts, the accepted countries and their rarity for every AI expedition.</p>
+        <p className={`connection ${status?.connected ? 'is-on' : ''}`}>{status?.connected ? `Connected to ${status.model}` : 'Not configured on this server'}</p>
+        <p className="note">For local play, add these to the ignored <code>.dev.vars</code> file and restart. For the hosted app, add them as runtime secrets.</p>
+        <pre>GENAI_API_KEY=your_purdue_key{'\n'}GENAI_MODEL=your_model_id{'\n'}GAME_SECRET=a_long_random_secret</pre>
+        <p className="note">Create a key in GenAI Studio under Settings, Account, API Keys. Use the exact model ID from <code>/api/models</code>. Optional: <code>GENAI_BACKEND=vllm</code> or <code>ollama</code> for structured output.</p>
+        <p className="note">Keys stay on the server. Output is checked for structure and country codes, but facts can still be wrong.</p>
+        <a className="link" href="https://docs.rcac.purdue.edu/services/genai/api/" target="_blank" rel="noreferrer">Purdue API guide<ArrowRight size={14} /></a>
+      </>}
+    </Dialog>
+  </div>;
+}
+
+function Dialog({ open, onClose, title, children }: { open: boolean; onClose: () => void; title: string; children: React.ReactNode }) {
+  const ref = useRef<HTMLDialogElement>(null);
+  useEffect(() => {
+    const d = ref.current;
+    if (!d) return;
+    if (open && !d.open) d.showModal();
+    if (!open && d.open) d.close();
+  }, [open]);
+  return <dialog ref={ref} className="dialog" aria-labelledby="dialog-title" onClose={onClose} onClick={e => { if (e.target === ref.current) onClose(); }}>
+    <div className="dialog-body">
+      <header className="dialog-head"><h2 id="dialog-title">{title}</h2>
+        <button type="button" className="btn-icon" aria-label="Close" onClick={onClose}><X size={18} strokeWidth={1.75} /></button></header>
+      {open && children}
+    </div>
+  </dialog>;
+}
+
+function Toggle({ title, description, checked, onChange }: { title: string; description: string; checked: boolean; onChange: () => void }) {
+  return <button type="button" className="toggle-row" role="switch" aria-checked={checked} onClick={onChange}>
+    <span><b>{title}</b><small>{description}</small></span>
+    <span className={`switch ${checked ? 'is-on' : ''}`} aria-hidden="true"><span /></span>
+  </button>;
+}
+
+function TierScale() {
+  return <ol className="tiers">{TIERS.map((t, i) => <li key={t.name}><span className={`chip tier-${i}`} aria-hidden="true" />{t.name}<span className="mono">{km(t.points)}</span></li>)}</ol>;
+}
+
+function MapLegend() {
+  return <div className="map-legend" aria-hidden="true">{TIERS.map((t, i) => <span key={t.name}><span className={`chip tier-${i}`} />{t.name}</span>)}</div>;
+}
+
+function AnswerList({ result }: { result: Result }) {
+  return <div className="answer-list">
+    <ul>{[...result.answers].sort((a, b) => b.points - a.points || countryName(a.country).localeCompare(countryName(b.country))).map(a =>
+      <li key={a.country} className={a.country === result.country ? 'is-yours' : ''}>
+        <span className={`chip tier-${tierOf(a.points)}`} aria-hidden="true" />
+        <span>{countryName(a.country)}{a.country === result.country && <span className="tag">Your pin</span>}</span>
+        <span className="mono">{km(a.points)}</span>
+      </li>)}</ul>
+    <a className="link" href={result.source} target="_blank" rel="noreferrer">Source<ArrowRight size={13} /></a>
+  </div>;
+}
