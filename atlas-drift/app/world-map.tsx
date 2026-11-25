@@ -4,7 +4,7 @@ import { LocateFixed, Minus, Plus } from 'lucide-react';
 import countries from '@/lib/countries.json';
 import { TIERS, type Answer } from '@/lib/game';
 
-type Shape = { code: string | null; name: string; path: string };
+type Shape = { code: string | null; name: string; path: string; tint?: number };
 type Point = { x: number; y: number };
 type View = { k: number; x: number; y: number };
 type Props = {
@@ -56,8 +56,47 @@ const Graticule = memo(function Graticule() {
   /* Lines run well past the projection so letterboxed ocean keeps the same chart texture. */
   for (let lon = -330; lon <= 330; lon += 30) if (lon !== 180 && lon !== -180) lines.push(<line key={`x${lon}`} x1={(lon + 180) * 3} x2={(lon + 180) * 3} y1={-900} y2={1440} />);
   for (let lat = -240; lat <= 240; lat += 30) lines.push(<line key={`y${lat}`} x1={-1080} x2={2160} y1={(90 - lat) * 3} y2={(90 - lat) * 3} className={lat === 0 ? 'equator' : undefined} />);
-  return <g className="graticule" aria-hidden="true">{lines}</g>;
+  /* Tropics as dotted lines, labelled in the Pacific like a period chart. */
+  const tropic = (lat: number) => (90 - lat) * 3;
+  return <g className="graticule" aria-hidden="true">
+    {lines}
+    <line x1={-1080} x2={2160} y1={tropic(23.44)} y2={tropic(23.44)} className="tropic" />
+    <line x1={-1080} x2={2160} y1={tropic(-23.44)} y2={tropic(-23.44)} className="tropic" />
+    <text x="96" y={tropic(23.44) - 2.5}>Tropic of Cancer</text>
+    <text x="96" y={268.5}>Equator</text>
+    <text x="96" y={tropic(-23.44) - 2.5}>Tropic of Capricorn</text>
+  </g>;
 });
+
+/* Engraved water lines: the coast stroked in concentric rings beneath the land. Rings are drawn from a
+   thinned copy of the coastline at a detail level that follows zoom, and only the stretches of coast
+   near the visible area are stroked, so even full detail stays cheap when zoomed in. */
+type CoastPiece = { x0: number; y0: number; x1: number; y1: number; d: string };
+const COAST_LEVELS = [{ upTo: 2, tolerance: 2.5 }, { upTo: 4.5, tolerance: 1 }, { upTo: Infinity, tolerance: 0.4 }];
+const coastLevel = (k: number) => COAST_LEVELS.findIndex(l => k <= l.upTo);
+const coastCache = new Map<number, CoastPiece[]>();
+function coastPieces(shapes: Shape[], level: number) {
+  const cached = coastCache.get(level);
+  if (cached) return cached;
+  const tolerance = COAST_LEVELS[level].tolerance, out: CoastPiece[] = [];
+  for (const s of shapes) for (const sub of s.path.split(/(?=M)/)) {
+    const pts = [...sub.matchAll(/[ML]([-\d.]+),([-\d.]+)/g)].map(m => [+m[1], +m[2]]);
+    if (pts.length < 3) continue;
+    const kept = [pts[0]];
+    for (const p of pts) { const q = kept[kept.length - 1]; if (Math.hypot(p[0] - q[0], p[1] - q[1]) >= tolerance) kept.push(p); }
+    if (kept.length < 3) continue;
+    const xs = kept.map(p => p[0]), ys = kept.map(p => p[1]);
+    out.push({ x0: Math.min(...xs), y0: Math.min(...ys), x1: Math.max(...xs), y1: Math.max(...ys), d: 'M' + kept.map(p => p.join(',')).join('L') + 'Z' });
+  }
+  coastCache.set(level, out);
+  return out;
+}
+function Coast() {
+  return <g className="coast" aria-hidden="true">
+    <path className="ring-outer" /><path className="ring-outer-gap" />
+    <path className="ring-inner" /><path className="ring-inner-gap" />
+  </g>;
+}
 
 const SeaLabels = memo(function SeaLabels() {
   return <g className="sea-labels" aria-hidden="true">
@@ -86,7 +125,7 @@ const Land = memo(function Land({ shapes, selected, answers, wrong, showDots }: 
   const dots = showDots ? countries.filter(c => !drawn.has(c.code) || SMALL.has(c.code)) : [];
   return <>
     <g className="land">
-      {shapes.map((s, i) => <path key={i} d={s.path} data-country={s.code || undefined} data-name={s.name} className={classFor(s.code)} />)}
+      {shapes.map((s, i) => <path key={i} d={s.path} data-country={s.code || undefined} data-name={s.name} className={`${classFor(s.code)} tint-${s.tint ?? 0}`} />)}
     </g>
     <g className="dots">
       {dots.map(c => <circle key={c.code} cx={c.x} cy={c.y} r={2.4} data-country={c.code} data-name={c.name} className={`dot ${classFor(c.code)}`} />)}
@@ -107,23 +146,76 @@ export default function WorldMap({ active, selected, point, onSelect, showBorder
   const pointers = useRef(new Map<number, Point>());
   const gesture = useRef<{ start: Point; view: View; moved: boolean; pinch?: { distance: number; mid: Point; view: View } } | null>(null);
   const pinAt = useRef<Point | null>(null);
+  const host = useRef<HTMLDivElement>(null);
+  const coastPlate = useRef<SVGSVGElement>(null);
+  const coastLayer = useRef<SVGGElement>(null);
+  const coastView = useRef<View>(IDENTITY);
+  const coastTimer = useRef(0);
 
   useEffect(() => { loadShapes().then(setShapes).catch(() => setFailed(true)); }, []);
+
+  /* The engraved coast rings are expensive to stroke, so they live on their own plate. While the view
+     moves, the compositor just slides and scales the last drawing of that plate; once the view has
+     been still for a moment the rings are redrawn crisply at the new position. */
+  const shapesRef = useRef<Shape[]>([]);
+  const commitCoast = useCallback(() => {
+    coastTimer.current = 0;
+    const { k, x, y } = view.current;
+    const layer = coastLayer.current, box = host.current;
+    if (layer && box && shapesRef.current.length) {
+      /* Visible content rectangle, padded so a short pan never runs off the drawn rings. */
+      const S = Math.min(box.clientWidth / VB.w, box.clientHeight / VB.h) || 1;
+      const w = box.clientWidth / S, h = box.clientHeight / S;
+      const cx = VB.x + VB.w / 2, cy = VB.y + VB.h / 2;
+      const pad = 0.35;
+      const left = (cx - w * (0.5 + pad) - x) / k, right = (cx + w * (0.5 + pad) - x) / k;
+      const top = (cy - h * (0.5 + pad) - y) / k, bottom = (cy + h * (0.5 + pad) - y) / k;
+      const d = coastPieces(shapesRef.current, coastLevel(k))
+        .filter(p => p.x1 >= left && p.x0 <= right && p.y1 >= top && p.y0 <= bottom).map(p => p.d).join('');
+      layer.querySelectorAll('path').forEach(path => path.setAttribute('d', d));
+    }
+    layer?.setAttribute('transform', `translate(${x.toFixed(2)} ${y.toFixed(2)}) scale(${k.toFixed(4)})`);
+    coastView.current = view.current;
+    if (coastPlate.current) coastPlate.current.style.transform = '';
+  }, []);
+  const moveCoast = useCallback(() => {
+    const plate = coastPlate.current, box = host.current;
+    if (!plate || !box) return;
+    const v = view.current, c = coastView.current;
+    if (v.k === c.k && v.x === c.x && v.y === c.y) { plate.style.transform = ''; return; }
+    const w = box.clientWidth, h = box.clientHeight;
+    const S = Math.min(w / VB.w, h / VB.h), ox = (w - VB.w * S) / 2, oy = (h - VB.h * S) / 2;
+    const s = v.k / c.k, dx = v.x - c.x * s, dy = v.y - c.y * s;
+    const tx = ox * (1 - s) + S * (dx + VB.x * (s - 1)), ty = oy * (1 - s) + S * (dy + VB.y * (s - 1));
+    plate.style.transform = `translate(${tx.toFixed(2)}px, ${ty.toFixed(2)}px) scale(${s.toFixed(5)})`;
+    clearTimeout(coastTimer.current);
+    coastTimer.current = window.setTimeout(commitCoast, 180);
+  }, [commitCoast]);
+  /* Draw the rings once the coastline arrives, then prepare the finer levels while the browser is idle. */
+  useEffect(() => {
+    if (!shapes.length) return;
+    shapesRef.current = shapes;
+    commitCoast();
+    const idle = window.requestIdleCallback ?? ((cb: () => void) => window.setTimeout(cb, 400));
+    idle(() => coastPieces(shapes, 1));
+    idle(() => coastPieces(shapes, 2));
+  }, [shapes, commitCoast]);
 
   /* Writes the current view straight to the DOM; React is not involved in pan/zoom frames. */
   const paint = useCallback(() => {
     frame.current = 0;
     const { k, x, y } = view.current;
     zoomLayer.current?.setAttribute('transform', `translate(${x.toFixed(2)} ${y.toFixed(2)}) scale(${k.toFixed(4)})`);
+    moveCoast();
     svg.current?.style.setProperty('--k', String(k));
-    const r = (2.4 / Math.sqrt(k)).toFixed(2);
+    const r = (2.4 / Math.pow(k, 0.75)).toFixed(2);
     zoomLayer.current?.querySelectorAll<SVGCircleElement>('.dot').forEach(d => d.setAttribute('r', r));
     const p = pinAt.current;
     if (pinLayer.current) {
       if (p) { pinLayer.current.setAttribute('transform', `translate(${(p.x * k + x).toFixed(2)} ${(p.y * k + y).toFixed(2)})`); pinLayer.current.style.display = ''; }
       else pinLayer.current.style.display = 'none';
     }
-  }, []);
+  }, [moveCoast]);
   const setView = useCallback((next: View) => {
     view.current = clamp(next);
     if (!frame.current) frame.current = requestAnimationFrame(paint);
@@ -216,7 +308,7 @@ export default function WorldMap({ active, selected, point, onSelect, showBorder
 
   /* A React render can replace dot elements; repaint so their zoom-scaled radius sticks. */
   useEffect(() => { if (!frame.current) frame.current = requestAnimationFrame(paint); });
-  useEffect(() => () => { cancelAnimationFrame(frame.current); cancelAnimationFrame(animation.current); }, []);
+  useEffect(() => () => { cancelAnimationFrame(frame.current); cancelAnimationFrame(animation.current); clearTimeout(coastTimer.current); }, []);
 
   const hideTip = () => { if (tip.current) tip.current.style.opacity = '0'; };
   const showTip = (event: React.PointerEvent) => {
@@ -309,8 +401,11 @@ export default function WorldMap({ active, selected, point, onSelect, showBorder
   };
 
   const centre = { x: VB.x + VB.w / 2, y: VB.y + VB.h / 2 };
-  return <div className={`world-map ${active ? 'interactive' : ''} ${answers ? 'revealed' : ''} ${showBorders ? 'bordered' : ''}`}>
-    <svg ref={svg} viewBox={`${VB.x} ${VB.y} ${VB.w} ${VB.h}`} preserveAspectRatio="xMidYMid meet"
+  return <div ref={host} className={`world-map ${active ? 'interactive' : ''} ${answers ? 'revealed' : ''} ${showBorders ? 'bordered' : ''}`}>
+    <svg ref={coastPlate} className="coast-plate" viewBox={`${VB.x} ${VB.y} ${VB.w} ${VB.h}`} preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+      <g ref={coastLayer}><Coast /></g>
+    </svg>
+    <svg ref={svg} className="chart" viewBox={`${VB.x} ${VB.y} ${VB.w} ${VB.h}`} preserveAspectRatio="xMidYMid meet"
       role="application" aria-roledescription="map" tabIndex={active ? 0 : -1}
       aria-label={active ? 'World map. Arrow keys pan, plus and minus zoom, 0 resets, Enter pins the country under the centre crosshair.' : 'World map'}
       onPointerDown={onPointerDown} onPointerMove={onPointerMove} onPointerUp={e => endPointer(e)} onPointerCancel={e => endPointer(e, true)}
@@ -327,6 +422,9 @@ export default function WorldMap({ active, selected, point, onSelect, showBorder
       </g>
       <g className="crosshair" aria-hidden="true"><circle cx={centre.x} cy={centre.y} r="7" /><path d={`M${centre.x} ${centre.y - 14}v6m0 16v6m-14-14h6m16 0h6`} /></g>
     </svg>
+    <div className="map-paper" aria-hidden="true" />
+    <div className="neatline" aria-hidden="true" />
+    <CompassRose />
     <div ref={tip} className="map-tip" aria-hidden="true" />
     {failed && <p className="map-error">The map didn’t load. You can still pick countries with search.</p>}
     {!shapes.length && !failed && <div className="map-loading" aria-hidden="true" />}
@@ -336,4 +434,25 @@ export default function WorldMap({ active, selected, point, onSelect, showBorder
       <button type="button" aria-label="Show whole world" onClick={() => animateTo(baseView(), 450)}><LocateFixed size={17} strokeWidth={1.75} /></button>
     </div>}
   </div>;
+}
+
+/* A plain eight-point rose: cardinal points split light and dark, as engraved roses are. */
+function CompassRose() {
+  const point = (angle: number, long: number, short: number) => {
+    const r = (a: number) => (a - 90) * Math.PI / 180;
+    const tip = [Math.cos(r(angle)) * long, Math.sin(r(angle)) * long];
+    const l = [Math.cos(r(angle - 45)) * short, Math.sin(r(angle - 45)) * short];
+    const rr = [Math.cos(r(angle + 45)) * short, Math.sin(r(angle + 45)) * short];
+    return <g key={angle}>
+      <path d={`M0 0L${l[0].toFixed(2)} ${l[1].toFixed(2)}L${tip[0].toFixed(2)} ${tip[1].toFixed(2)}Z`} className="rose-light" />
+      <path d={`M0 0L${rr[0].toFixed(2)} ${rr[1].toFixed(2)}L${tip[0].toFixed(2)} ${tip[1].toFixed(2)}Z`} className="rose-dark" />
+    </g>;
+  };
+  return <svg className="compass-rose" viewBox="-50 -58 100 108" aria-hidden="true">
+    <circle r="34" className="rose-ring" /><circle r="30" className="rose-ring thin" />
+    {[45, 135, 225, 315].map(a => point(a, 26, 6))}
+    {[0, 90, 180, 270].map(a => point(a, 44, 8))}
+    <circle r="2.4" className="rose-hub" />
+    <text y="-48" className="rose-n">N</text>
+  </svg>;
 }

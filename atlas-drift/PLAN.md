@@ -11,7 +11,7 @@ Build an independent Farflung-inspired geography game with an atlas visual theme
 - Handwritten practice bank, unlimited shuffled practice expeditions and a deterministic shared daily route with browser-local attempt tracking.
 - Purdue AI mode: fresh generation for every new expedition, including all accepted countries, their point values, rules, explanations and suggested sources. No silent substitution of practice questions on an AI failure.
 - Server-side validation and scoring. Answer tables are encrypted in an expedition token and do not appear in the public question payload.
-- Responsive survey-chart interface (docked prompt panel, full-bleed map, light and dark themes), native dialogs, keyboard and pinch-zoom map controls, reduced-motion support and persistent progress.
+- Responsive rustic-atlas interface (aged paper, hand-tinted political washes, engraved coastlines, double neatline, compass rose; docked prompt panel, full-bleed map, light and lamplit dark themes), native dialogs, keyboard and pinch-zoom map controls, reduced-motion support and persistent progress.
 - Map performance: pan/zoom bypass React rendering, the land layer is memoised and the costly SVG drop-shadow filter is gone. Map data repaired (antimeridian NaN and wedge artifacts) and trimmed to ~210 KB gzipped.
 
 ## Architecture

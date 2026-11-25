@@ -173,7 +173,7 @@ export default function Home() {
     <a className="skip-link" href="#panel">Skip to {playing ? 'prompt' : 'game setup'}</a>
     <header className="topbar">
       <button type="button" className="brand" onClick={goHome} aria-label="Atlas Drift, home">
-        <svg viewBox="0 0 40 40" aria-hidden="true" className="brand-mark"><circle cx="17" cy="21" r="10" /><circle cx="30" cy="10" r="4.5" /></svg>
+        <svg viewBox="-20 -20 40 40" aria-hidden="true" className="brand-mark"><circle r="15" /><path d="M0-17L4-4L17 0L4 4L0 17L-4 4L-17 0L-4-4Z" /><circle r="2" /></svg>
         <span>Atlas Drift</span>
       </button>
       <nav aria-label="Game">
@@ -225,6 +225,7 @@ export default function Home() {
               <span><b>Resume {MODE_NAMES[game!.mode].toLowerCase()}</b> Round {round + 1} of 5, {km(total)} km so far</span><ArrowRight size={16} />
             </button>}
 
+            <Ornament />
             <section className="scoring" aria-labelledby="scoring-title">
               <h2 id="scoring-title" className="field-label">Scoring</h2>
               <TierScale />
@@ -239,17 +240,17 @@ export default function Home() {
                   return <li key={i} className={state} aria-label={r ? `Round ${i + 1}: ${r.points ? `${km(r.points)} km` : 'miss'}` : `Round ${i + 1}`} />;
                 })}
               </ol>
-              <span className="score"><span className="mono">{km(total)}</span> km</span>
+              <span className="score"><span className="num">{km(total)}</span> km</span>
             </div>
 
-            <p className="meta"><span>{question?.category}</span><span className="mono">{round + 1}/5</span></p>
+            <p className="meta"><span>{question?.category}</span><span className="num">{round + 1}/5</span></p>
             <h1 className="prompt" ref={heading} tabIndex={-1}>{question?.prompt}</h1>
             <details className="rules"><summary>Rules<ChevronDown size={14} /></summary><p>{question?.rule}</p></details>
 
             {stage === 'play' ? <>
               {gameOptions.timed && <div className={`timer ${remaining <= 15 ? 'is-urgent' : ''}`} role="timer" aria-label={`${remaining} seconds left`}>
                 <div className="timer-track"><div className="timer-fill" style={{ transform: `scaleX(${remaining / ROUND_SECONDS})` }} /></div>
-                <span className="mono">{remaining}s</span>
+                <span className="num">{remaining}s</span>
               </div>}
               <div className={`pick ${selected ? 'has-pick' : ''}`} aria-live="polite">
                 <MapPin size={18} strokeWidth={1.75} aria-hidden="true" />
@@ -265,7 +266,7 @@ export default function Home() {
             </> : result && <>
               <div className={`verdict ${result.points ? `tier-${tierOf(result.points)}` : 'is-miss'}`} role="status">
                 <span className="verdict-label">{result.points ? TIERS[tierOf(result.points)].name : 'Not on the list'}</span>
-                <strong className="mono">{result.points ? `+${km(result.points)} km` : '0 km'}</strong>
+                <strong className="num">{result.points ? `+${km(result.points)} km` : '0 km'}</strong>
               </div>
               <p className="fact"><b>{countryName(result.country)}.</b> {result.fact}</p>
               <details className="answers">
@@ -285,19 +286,20 @@ export default function Home() {
               <button type="button" className="btn-icon" onClick={goHome} aria-label="Back to home"><ArrowLeft size={18} strokeWidth={1.75} /></button>
               <span className="hud-title">{MODE_NAMES[game!.mode]}</span>
             </div>
-            <h1 className="total" ref={heading} tabIndex={-1}><span className="mono">{km(total)}</span> km</h1>
+            <h1 className="total" ref={heading} tabIndex={-1}><span className="num">{km(total)}</span> km</h1>
             <p className="lede">{game!.results.filter(r => r.points > 0).length} of 5 correct{game!.results.some(r => r.points === 5000) && `, ${game!.results.filter(r => r.points === 5000).length} Farflung`}.</p>
             <ol className="recap">
               {game!.results.map((r, i) => <li key={i}>
                 <button type="button" className="recap-row" onClick={() => setReview(review === i ? null : i)} aria-expanded={review === i}>
                   <span className={`chip ${r.points ? `tier-${tierOf(r.points)}` : 'miss'}`} aria-hidden="true" />
                   <span className="recap-text"><small>{game!.questions[i].category}</small><b>{countryName(r.country)}</b></span>
-                  <span className="mono recap-points">{r.points ? `+${km(r.points)}` : 'Miss'}</span>
+                  <span className="num recap-points">{r.points ? `+${km(r.points)}` : 'Miss'}</span>
                   <ChevronDown size={16} className="chev" />
                 </button>
                 {review === i && <div className="recap-detail"><p className="recap-q">{r.question}</p><p>{r.fact}</p><AnswerList result={r} /></div>}
               </li>)}
             </ol>
+            <Ornament />
             <div className="actions">
               <button type="button" className="btn btn-primary" onClick={share}>{copied ? <Check size={18} /> : <Copy size={17} />}{copied ? 'Copied' : 'Copy result'}</button>
               <button type="button" className="btn btn-secondary" disabled={busy} onClick={() => start(game?.mode === 'ai' ? 'ai' : 'practice')}>
@@ -337,14 +339,14 @@ export default function Home() {
       </>}
       {modal === 'stats' && <>
         <dl className="stats">
-          <div><dt>Expeditions</dt><dd className="mono">{history.length}</dd></div>
-          <div><dt>Best</dt><dd className="mono">{km(Math.max(0, ...history.map(h => h.score)))} km</dd></div>
-          <div><dt>Correct pins</dt><dd className="mono">{history.length ? Math.round(history.reduce((s, h) => s + h.correct, 0) / (history.length * 5) * 100) : 0}%</dd></div>
+          <div><dt>Expeditions</dt><dd className="num">{history.length}</dd></div>
+          <div><dt>Best</dt><dd className="num">{km(Math.max(0, ...history.map(h => h.score)))} km</dd></div>
+          <div><dt>Correct pins</dt><dd className="num">{history.length ? Math.round(history.reduce((s, h) => s + h.correct, 0) / (history.length * 5) * 100) : 0}%</dd></div>
         </dl>
         {history.length ? <ol className="journal">{history.slice(0, 10).map(h => <li key={h.id}>
           <span>{new Date(`${h.date}T12:00`).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}<small>{MODE_NAMES[h.mode] || h.mode}</small></span>
-          <span className="mono">{h.correct}/5</span>
-          <b className="mono">{km(h.score)} km</b>
+          <span className="num">{h.correct}/5</span>
+          <b className="num">{km(h.score)} km</b>
         </li>)}</ol> : <p className="empty">No expeditions yet. Finish one and it will show up here.</p>}
         <p className="note">Saved in this browser only. Clearing site data resets your journal and today’s attempt.</p>
       </>}
@@ -385,8 +387,13 @@ function Toggle({ title, description, checked, onChange }: { title: string; desc
   </button>;
 }
 
+/** A ruled divider with a centre lozenge, as used between sections of an atlas page. */
+function Ornament() {
+  return <div className="ornament" role="presentation"><span /></div>;
+}
+
 function TierScale() {
-  return <ol className="tiers">{TIERS.map((t, i) => <li key={t.name}><span className={`chip tier-${i}`} aria-hidden="true" />{t.name}<span className="mono">{km(t.points)}</span></li>)}</ol>;
+  return <ol className="tiers">{TIERS.map((t, i) => <li key={t.name}><span className={`chip tier-${i}`} aria-hidden="true" />{t.name}<span className="num">{km(t.points)}</span></li>)}</ol>;
 }
 
 function MapLegend() {
@@ -399,7 +406,7 @@ function AnswerList({ result }: { result: Result }) {
       <li key={a.country} className={a.country === result.country ? 'is-yours' : ''}>
         <span className={`chip tier-${tierOf(a.points)}`} aria-hidden="true" />
         <span>{countryName(a.country)}{a.country === result.country && <span className="tag">Your pin</span>}</span>
-        <span className="mono">{km(a.points)}</span>
+        <span className="num">{km(a.points)}</span>
       </li>)}</ul>
     <a className="link" href={result.source} target="_blank" rel="noreferrer">Source<ArrowRight size={13} /></a>
   </div>;

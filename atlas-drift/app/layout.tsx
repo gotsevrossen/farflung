@@ -1,7 +1,8 @@
 import type { Metadata, Viewport } from "next";
-import "@fontsource-variable/bricolage-grotesque/opsz.css";
-import "@fontsource/geist-mono/400.css";
-import "@fontsource/geist-mono/500.css";
+import "@fontsource/im-fell-english/400.css";
+import "@fontsource/im-fell-english/400-italic.css";
+import "@fontsource-variable/alegreya/wght.css";
+import "@fontsource/alegreya-sc/500.css";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -18,8 +19,8 @@ export const viewport: Viewport = {
   initialScale: 1,
   viewportFit: "cover",
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f4f6f9" },
-    { media: "(prefers-color-scheme: dark)", color: "#121821" },
+    { media: "(prefers-color-scheme: light)", color: "#f1e9d6" },
+    { media: "(prefers-color-scheme: dark)", color: "#1f1a15" },
   ],
 };
 

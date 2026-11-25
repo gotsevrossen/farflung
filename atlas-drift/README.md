@@ -36,9 +36,10 @@ npm run build
 ## Files
 
 - `app/page.tsx`: game flow, home/game/results panels, dialogs.
-- `app/world-map.tsx`: the SVG map. Pan, zoom and pinch write transforms straight to the DOM (no React re-render per frame); the land layer is memoised; the view fits the accepted answers on reveal.
+- `app/world-map.tsx`: the SVG map. Pan, zoom and pinch write transforms straight to the DOM (no React re-render per frame); the land layer is memoised; the view fits the accepted answers on reveal. Engraved coast rings live on a separate compositor layer, redrawn only for the visible area once the view settles.
+- `public/world.json`: country shapes plus a precomputed `tint` (a four-colouring, so neighbouring countries never share a wash).
 - `app/country-search.tsx`: accessible country combobox (aliases, accents and keyboard support).
-- `app/globals.css`: design tokens (OKLCH, light and dark), layout and motion.
+- `app/globals.css`: rustic-atlas design tokens (OKLCH, light and lamplit dark), paper texture, neatline, layout and motion.
 - `app/api/`: configuration status, game generation and scoring endpoints.
 - `lib/expedition.ts`: Purdue requests and authenticated encryption of answer tables.
 - `lib/game.ts`: validation, deterministic daily selection, scoring rules and tier colours.
@@ -55,5 +56,5 @@ Map boundaries are illustrative and do not adjudicate sovereignty. Country selec
 
 - World shapes: [world-atlas](https://github.com/topojson/world-atlas), ISC license, derived from public-domain [Natural Earth](https://www.naturalearthdata.com/about/terms-of-use/). Bundled as `public/world.json`.
 - Country registry: [mledoze/countries](https://github.com/mledoze/countries), ODbL-1.0. The derived country registry remains available in `lib/countries.json` under ODbL-1.0; see `DATA-LICENSE.md`.
-- Typefaces: Bricolage Grotesque and Geist Mono, self-hosted via Fontsource, under the SIL Open Font License. System-font fallbacks are included.
+- Typefaces: IM Fell English (the Fell Types, digitised by Igino Marini), Alegreya and Alegreya SC, self-hosted via Fontsource, under the SIL Open Font License. System-font fallbacks are included.
 - This is an independent project; it is not affiliated with Farflung LLC or Purdue University.
